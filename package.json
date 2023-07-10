@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "mongoose": "^7.3.2",
+    "node-fetch": "^3.3.1"
+  }
+}
