@@ -1,6 +1,7 @@
 require("dotenv").config();
 import fetch from "node-fetch";
 import { connect, connection, Schema, model } from "mongoose";
+import Daten from "./db/models/Daten";
 
 //! remove this after you've confirmed it is working
 console.log(process.env);
@@ -10,61 +11,66 @@ console.log(process.env);
 //
 
 // Verbindung zur MongoDB-Datenbank herstellen
-connect(process.env.MONGODB_URI, {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-const db = connection;
+const db = mongoose.connection;
 
 // Mongoose-Modell für die zu speichernden Daten definieren
-const DatenSchema = new Schema({
-  url: String,
-  lastUpdated: { type: Date, default: Date.now },
-});
-
-const Daten = model("Daten", DatenSchema);
+//! wird von db/models/Daten.js importiert
+// const DatenSchema = new mongoose.Schema({
+//   link: String,
+//   lastUpdated: Date,
+// });
+// const Daten = mongoose.model("Daten", DatenSchema);
 
 // Funktion, um die API-Abfrage durchzuführen und die Daten zu speichern
-async function abfrageUndSpeichern(daten) {
+async function abfrageUndSpeichern() {
   try {
-    // API-Abfrage durchführen (Beispiel: mit fetch)
-    const response = await fetch(daten.url);
-    const responseData = await response.json();
-
-    // Daten speichern
-    daten.lastUpdated = Date.now();
-    // Aktualisiere die Daten in der MongoDB
-    await daten.save();
-
-    console.log(`Daten erfolgreich aktualisiert: ${daten.url}`);
-    console.log(responseData);
-  } catch (error) {
-    console.error(`Fehler beim Aktualisieren der Daten (${daten.url}):`, error);
-  }
-}
-
-// Funktion, um den ältesten Datensatz zu finden und zu aktualisieren
-async function aktualisiereAeltestenDatensatz() {
-  try {
-    // Ältesten Datensatz basierend auf lastUpdated finden
+    // Ältesten Datensatz in der Datenbank finden
     const aeltesterDatensatz = await Daten.findOne().sort("lastUpdated");
 
     if (aeltesterDatensatz) {
-      await abfrageUndSpeichern(aeltesterDatensatz);
+      // API-Abfrage durchführen (mit node-fetch)
+      const response = await fetch(aeltesterDatensatz.link);
+      const data = await response.json();
+
+      // Daten speichern und den lastUpdated-Zeitstempel aktualisieren
+      aeltesterDatensatz.set({
+        lastUpdated: Date.now(),
+        // Felder entsprechend der API-Antwort setzen
+        // Beispiel: name: data.name,
+        // ...
+      });
+      await aeltesterDatensatz.save();
+
+      console.log("Daten erfolgreich aktualisiert und gespeichert!");
     } else {
-      console.log("Keine Datensätze gefunden.");
+      console.log("Keine Daten in der Datenbank vorhanden.");
     }
   } catch (error) {
-    console.error("Fehler beim Abrufen des ältesten Datensatzes:", error);
+    console.error("Fehler beim Aktualisieren und Speichern der Daten:", error);
   }
 }
 
-// Verbindung zur Datenbank herstellen und Aktualisierungsintervall starten
+// Funktion, um die API-Abfrage in einem Intervall auszuführen
+function startAbfrageIntervall() {
+  // Initial eine API-Abfrage durchführen
+  abfrageUndSpeichern();
+
+  // Abfrage-Intervall alle 15 Sekunden starten
+  setInterval(() => {
+    abfrageUndSpeichern();
+  }, 15000);
+}
+
+// Verbindung zur Datenbank herstellen und Abfrage-Intervall starten
 db.on(
   "error",
   console.error.bind(console, "Fehler beim Verbinden mit der Datenbank:")
 );
 db.once("open", () => {
   console.log("Verbunden mit der Datenbank");
-  setInterval(aktualisiereAeltestenDatensatz, 15000); // Aktualisierungsintervall von 15 Sekunden
+  startAbfrageIntervall();
 });
