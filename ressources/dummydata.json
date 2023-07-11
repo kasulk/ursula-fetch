@@ -1,0 +1,28 @@
+[
+  {
+    "Symbol": "TSLA",
+    "Price": "999.99",
+    "lastUpdated": "never",
+    "EPS": "99.99"
+  },
+  {
+    "Symbol": "PETS",
+    "Price": "999.99",
+    "EPS": "99.99"
+  },
+  {
+    "Symbol": "AAPL",
+    "Price": "999.99",
+    "EPS": "99.99"
+  },
+  {
+    "Symbol": "MCD",
+    "Price": "999.99",
+    "EPS": "99.99"
+  },
+  {
+    "Symbol": "IIPR",
+    "Price": "999.99",
+    "EPS": "99.99"
+  }
+]

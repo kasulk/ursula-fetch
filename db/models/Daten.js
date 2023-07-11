@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
+// import { connect, connection, Schema, model } from "mongoose";
 
-const { Schema } = mongoose;
+// const { Schema } = mongoose;
+const { Schema, connection } = mongoose;
 
 const datenSchema = new Schema({
   Symbol: { type: String, required: true },

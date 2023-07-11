@@ -1,14 +1,20 @@
-require("dotenv").config();
+// require("dotenv").config();
+import "dotenv/config";
 import fetch from "node-fetch";
-import { connect, connection, Schema, model } from "mongoose";
-import Daten from "./db/models/Daten";
+// import { connect, connection, Schema, model } from "mongoose";
+// import connect, connection, Schema, model from "mongoose";
+import connection from "mongoose";
+import Daten from "./db/models/Daten.js";
+import mongoose from "mongoose";
+// import Daten from "../db/models/Daten";
 
 //! remove this after you've confirmed it is working
-console.log(process.env);
+// console.log(process.env);
 //
 //
 //
 //
+const apiLink = `https://www.alphavantage.co/query?apikey=${process.env.API_KEY_AV}&function=OVERVIEW&symbol=`;
 
 // Verbindung zur MongoDB-Datenbank herstellen
 mongoose.connect(process.env.MONGODB_URI, {
@@ -25,16 +31,23 @@ const db = mongoose.connection;
 // });
 // const Daten = mongoose.model("Daten", DatenSchema);
 
+// step: ticker aus datensatz extrahieren und in
+// step: api link einbauen
+
 // Funktion, um die API-Abfrage durchzuführen und die Daten zu speichern
 async function abfrageUndSpeichern() {
   try {
     // Ältesten Datensatz in der Datenbank finden
     const aeltesterDatensatz = await Daten.findOne().sort("lastUpdated");
+    const singleApiLink = apiLink + aeltesterDatensatz.Symbol;
 
     if (aeltesterDatensatz) {
       // API-Abfrage durchführen (mit node-fetch)
-      const response = await fetch(aeltesterDatensatz.link);
+      // const response = await fetch(aeltesterDatensatz.link);
+      const response = await fetch(singleApiLink);
       const data = await response.json();
+
+      console.log("data:", data);
 
       // Daten speichern und den lastUpdated-Zeitstempel aktualisieren
       aeltesterDatensatz.set({
@@ -42,6 +55,7 @@ async function abfrageUndSpeichern() {
         // Felder entsprechend der API-Antwort setzen
         // Beispiel: name: data.name,
         // ...
+        EPS: data.EPS,
       });
       await aeltesterDatensatz.save();
 
