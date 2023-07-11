@@ -13,8 +13,8 @@ import mongoose from "mongoose";
 //
 //
 //
-//
-const apiLink = `https://www.alphavantage.co/query?apikey=${process.env.API_KEY_AV}&function=OVERVIEW&symbol=`;
+const API_KEY_AV = process.env.API_KEY_AV;
+const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=OVERVIEW&symbol=`;
 
 // Verbindung zur MongoDB-Datenbank herstellen
 mongoose.connect(process.env.MONGODB_URI, {
@@ -22,6 +22,7 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 const db = mongoose.connection;
+// console.log(db);
 
 // Mongoose-Modell für die zu speichernden Daten definieren
 //! wird von db/models/Daten.js importiert
@@ -34,16 +35,32 @@ const db = mongoose.connection;
 // step: ticker aus datensatz extrahieren und in
 // step: api link einbauen
 
+// // note: achtung startAbfrageIntervall() auskommentiert!
+//!works
+// try {
+//   // find all data in db collection
+//   const results = await Daten.find({});
+//   console.log(results);
+// } catch (err) {
+//   throw err;
+// }
 // Funktion, um die API-Abfrage durchzuführen und die Daten zu speichern
 async function abfrageUndSpeichern() {
   try {
+    // let doc = await Daten.create({ name: "test" });
+    // console.log(doc.createdAt);
+    // console.log(doc.updatedAt);
+
     // Ältesten Datensatz in der Datenbank finden
     const aeltesterDatensatz = await Daten.findOne().sort("lastUpdated");
+    // console.log(aeltesterDatensatz.Symbol);
+    console.log(aeltesterDatensatz);
     const singleApiLink = apiLink + aeltesterDatensatz.Symbol;
 
     if (aeltesterDatensatz) {
       // API-Abfrage durchführen (mit node-fetch)
       // const response = await fetch(aeltesterDatensatz.link);
+      console.log(`Fetche Daten fuer ${aeltesterDatensatz.Symbol}`);
       const response = await fetch(singleApiLink);
       const data = await response.json();
 
@@ -59,11 +76,16 @@ async function abfrageUndSpeichern() {
       });
       await aeltesterDatensatz.save();
 
-      console.log("Daten erfolgreich aktualisiert und gespeichert!");
+      console.log(
+        `Daten fuer ${aeltesterDatensatz.Symbol} erfolgreich aktualisiert und gespeichert!`
+      );
     } else {
-      console.log("Keine Daten in der Datenbank vorhanden.");
+      console.log(
+        `Keine Daten fuer ${aeltesterDatensatz.Symbol} in der Datenbank vorhanden.`
+      );
     }
   } catch (error) {
+    // console.log(aeltesterDatensatz.Symbol);
     console.error("Fehler beim Aktualisieren und Speichern der Daten:", error);
   }
 }
@@ -86,5 +108,6 @@ db.on(
 );
 db.once("open", () => {
   console.log("Verbunden mit der Datenbank");
+  // // note: achtung auskommentiert!
   startAbfrageIntervall();
 });
