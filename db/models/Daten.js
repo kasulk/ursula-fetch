@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 // const { Schema } = mongoose;
 const { Schema, connection } = mongoose;
 
+// Mongoose-Modell für die zu speichernden Daten definieren
 const datenSchema = new Schema(
   {
     Symbol: { type: String, required: true },
@@ -64,6 +65,7 @@ const datenSchema = new Schema(
     LogoURL: String,
     lastUpdated: Date,
   },
+  // create a timestamps for createdAt and updatedAt
   { timestamps: true } // https://mongoosejs.com/docs/timestamps.html
 );
 

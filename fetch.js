@@ -8,13 +8,9 @@ import Daten from "./db/models/Daten.js";
 import mongoose from "mongoose";
 // import Daten from "../db/models/Daten";
 
-//! remove this after you've confirmed it is working
-// console.log(process.env);
-//
-//
-//
 const API_KEY_AV = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=OVERVIEW&symbol=`;
+const fetchIntervall = 15 * 1000; // 15 seconds
 
 // Verbindung zur MongoDB-Datenbank herstellen
 mongoose.connect(process.env.MONGODB_URI, {
@@ -22,7 +18,6 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 const db = mongoose.connection;
-// console.log(db);
 
 // Mongoose-Modell für die zu speichernden Daten definieren
 //! wird von db/models/Daten.js importiert
@@ -32,43 +27,26 @@ const db = mongoose.connection;
 // });
 // const Daten = mongoose.model("Daten", DatenSchema);
 
-// step: ticker aus datensatz extrahieren und in
-// step: api link einbauen
-
-// // note: achtung startAbfrageIntervall() auskommentiert!
-//!works
-// try {
-//   // find all data in db collection
-//   const results = await Daten.find({});
-//   console.log(results);
-// } catch (err) {
-//   throw err;
-// }
 // Funktion, um die API-Abfrage durchzuführen und die Daten zu speichern
 async function abfrageUndSpeichern() {
   try {
-    // let doc = await Daten.create({ name: "test" });
-    // console.log(doc.createdAt);
-    // console.log(doc.updatedAt);
-
     // Ältesten Datensatz in der Datenbank finden
     const aeltesterDatensatz = await Daten.findOne().sort("lastUpdated");
-    // console.log(aeltesterDatensatz.Symbol);
-    console.log(aeltesterDatensatz);
     const singleApiLink = apiLink + aeltesterDatensatz.Symbol;
 
     if (aeltesterDatensatz) {
       // API-Abfrage durchführen (mit node-fetch)
-      // const response = await fetch(aeltesterDatensatz.link);
-      console.log(`Fetche Daten fuer ${aeltesterDatensatz.Symbol}`);
+      console.log(
+        `Fetche AlphaVantage Overview-Daten fuer ${aeltesterDatensatz.Symbol}`
+      );
+      // const response = await fetch(aeltesterDatensatz.link);  //! chatti
       const response = await fetch(singleApiLink);
       const data = await response.json();
-
-      console.log("data:", data);
+      // console.log("fetched data:", data);
 
       // Daten speichern und den lastUpdated-Zeitstempel aktualisieren
       aeltesterDatensatz.set({
-        lastUpdated: Date.now(),
+        lastUpdated: Date.now(), // note: dank timestamp in mongoose model nicht mehr noetig...
         // Felder entsprechend der API-Antwort setzen
         // Beispiel: name: data.name,
         // ...
@@ -77,15 +55,17 @@ async function abfrageUndSpeichern() {
       await aeltesterDatensatz.save();
 
       console.log(
-        `Daten fuer ${aeltesterDatensatz.Symbol} erfolgreich aktualisiert und gespeichert!`
+        `Datensatz fuer ${aeltesterDatensatz.Symbol} erfolgreich aktualisiert und gespeichert!`
       );
     } else {
       console.log(
         `Keine Daten fuer ${aeltesterDatensatz.Symbol} in der Datenbank vorhanden.`
       );
     }
+    console.log(
+      `Warte ${fetchIntervall / 1000} Sekunden bis zum naechsten fetch...`
+    );
   } catch (error) {
-    // console.log(aeltesterDatensatz.Symbol);
     console.error("Fehler beim Aktualisieren und Speichern der Daten:", error);
   }
 }
@@ -98,7 +78,8 @@ function startAbfrageIntervall() {
   // Abfrage-Intervall alle 15 Sekunden starten
   setInterval(() => {
     abfrageUndSpeichern();
-  }, 15000);
+    // }, 15000);
+  }, fetchIntervall);
 }
 
 // Verbindung zur Datenbank herstellen und Abfrage-Intervall starten
@@ -107,7 +88,6 @@ db.on(
   console.error.bind(console, "Fehler beim Verbinden mit der Datenbank:")
 );
 db.once("open", () => {
-  console.log("Verbunden mit der Datenbank");
-  // // note: achtung auskommentiert!
+  console.log("Verbunden mit Datenbank...");
   startAbfrageIntervall();
 });
