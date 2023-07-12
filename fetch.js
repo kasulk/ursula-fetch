@@ -10,7 +10,7 @@ import mongoose from "mongoose";
 
 const API_KEY_AV = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=OVERVIEW&symbol=`;
-const fetchIntervall = 5 * 1000; // 15 seconds
+const fetchIntervall = 15 * 1000; // 15 seconds
 
 // Verbindung zur MongoDB-Datenbank herstellen
 mongoose.connect(process.env.MONGODB_URI, {
@@ -32,14 +32,16 @@ async function abfrageUndSpeichern() {
   try {
     // Ältesten Datensatz in der Datenbank finden
     const aeltesterDatensatz = await Daten.findOne().sort("updatedAt");
-    const singleApiLink = apiLink + aeltesterDatensatz.Symbol;
+    // const singleApiLink = apiLink + aeltesterDatensatz.Symbol;
+    const singleApiLink = apiLink + aeltesterDatensatz.ticker;
 
     // console.log(aeltesterDatensatz);
 
     if (aeltesterDatensatz) {
       // API-Abfrage durchführen (mit node-fetch)
       console.log(
-        `Fetche AlphaVantage Overview-Daten fuer ${aeltesterDatensatz.Symbol}`
+        // `Fetche AlphaVantage Overview-Daten fuer ${aeltesterDatensatz.Symbol}`
+        `Fetche AlphaVantage Overview-Daten fuer ${aeltesterDatensatz.ticker}`
       );
       // const response = await fetch(aeltesterDatensatz.link);  //! chatti
       const response = await fetch(singleApiLink);
@@ -60,11 +62,11 @@ async function abfrageUndSpeichern() {
       await aeltesterDatensatz.save();
 
       console.log(
-        `Datensatz fuer ${aeltesterDatensatz.Symbol} erfolgreich aktualisiert und gespeichert!`
+        `Datensatz fuer ${aeltesterDatensatz.ticker} erfolgreich aktualisiert und gespeichert!`
       );
     } else {
       console.log(
-        `Keine Daten fuer ${aeltesterDatensatz.Symbol} in der Datenbank vorhanden.`
+        `Keine Daten fuer ${aeltesterDatensatz.ticker} in der Datenbank vorhanden.`
       );
     }
     console.log(

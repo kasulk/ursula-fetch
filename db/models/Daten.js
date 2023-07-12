@@ -7,7 +7,8 @@ const { Schema, connection } = mongoose;
 // Mongoose-Modell für die zu speichernden Daten definieren
 const datenSchema = new Schema(
   {
-    Symbol: { type: String, required: true },
+    // Symbol: { type: String, required: true },
+    ticker: { type: String, required: true },
     Price: Number,
     // DataAsOf: String,
     assetType: String,

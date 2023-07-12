@@ -1,17 +1,17 @@
 [
   {
-    "Symbol": "TSLA"
+    "ticker": "TSLA"
   },
   {
-    "Symbol": "PETS"
+    "ticker": "PETS"
   },
   {
-    "Symbol": "AAPL"
+    "ticker": "AAPL"
   },
   {
-    "Symbol": "MCD"
+    "ticker": "MCD"
   },
   {
-    "Symbol": "IIPR"
+    "ticker": "IIPR"
   }
 ]
