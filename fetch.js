@@ -10,7 +10,7 @@ import mongoose from "mongoose";
 
 const API_KEY_AV = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=OVERVIEW&symbol=`;
-const fetchIntervall = 15 * 1000; // 15 seconds
+const fetchIntervall = 3 * 1000; // 15 seconds
 
 // Verbindung zur MongoDB-Datenbank herstellen
 mongoose.connect(process.env.MONGODB_URI, {
@@ -49,15 +49,20 @@ async function abfrageUndSpeichern() {
       // console.log("fetched data:", data);
 
       // Daten speichern und den lastUpdated-Zeitstempel aktualisieren
+      //! if the data from the API is the same as in the db, data won't be updated (incl. the timestamp!)
       aeltesterDatensatz.set({
         // lastUpdated: Date.now(), // note: dank timestamp in mongoose model nicht mehr noetig...
         // Felder entsprechend der API-Antwort setzen
         // Beispiel: name: data.name,
         // ...
-        name: data.Name,
         assetType: data.AssetType,
+        cik: data.CIK,
+        currency: data.Currency,
+        description: data.Description,
         eps: data.EPS,
         eps15x: (data.EPS * 15).toFixed(2),
+        exchange: data.Exchange,
+        name: data.Name,
       });
       await aeltesterDatensatz.save();
 

@@ -12,12 +12,12 @@ const datenSchema = new Schema(
     Price: Number,
     // DataAsOf: String,
     assetType: String,
-    //
     name: String,
-    Description: String,
-    CIK: String,
-    Exchange: String,
-    Currency: String,
+    description: String,
+    cik: String,
+    exchange: String,
+    currency: String,
+    //
     Country: String,
     Sector: String,
     Industry: String,
