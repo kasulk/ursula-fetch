@@ -10,7 +10,7 @@ import mongoose from "mongoose";
 
 const API_KEY_AV = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=OVERVIEW&symbol=`;
-const fetchIntervall = 15 * 1000; // 15 seconds
+const fetchIntervall = 5 * 1000; // 15 seconds
 
 // Verbindung zur MongoDB-Datenbank herstellen
 mongoose.connect(process.env.MONGODB_URI, {
@@ -52,11 +52,10 @@ async function abfrageUndSpeichern() {
         // Felder entsprechend der API-Antwort setzen
         // Beispiel: name: data.name,
         // ...
+        name: data.Name,
         assetType: data.AssetType,
         eps: data.EPS,
-        eps15x: data.EPS * 15,
-        // EPS: data.EPS,
-        // epsx15: data.EPS * 15,
+        eps15x: (data.EPS * 15).toFixed(2),
       });
       await aeltesterDatensatz.save();
 

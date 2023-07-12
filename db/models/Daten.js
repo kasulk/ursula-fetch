@@ -11,7 +11,8 @@ const datenSchema = new Schema(
     Price: Number,
     // DataAsOf: String,
     assetType: String,
-    Name: String,
+    //
+    name: String,
     Description: String,
     CIK: String,
     Exchange: String,
