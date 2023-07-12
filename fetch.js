@@ -56,6 +56,7 @@ async function abfrageUndSpeichern() {
         // Beispiel: name: data.name,
         // ...
         address: data.Address,
+        analystTargetPrice: data.AnalystTargetPrice,
         assetType: data.AssetType,
         bookValue: data.BookValue,
         cik: data.CIK,
@@ -70,6 +71,7 @@ async function abfrageUndSpeichern() {
         eps15x: (data.EPS * 15).toFixed(2),
         exchange: data.Exchange,
         fiscalYearEnd: data.FiscalYearEnd,
+        forwardPE: data.ForwardPE,
         grossProfitTTM: data.GrossProfitTTM,
         industry: data.Industry,
         latestQuarter: data.LatestQuarter,
@@ -78,6 +80,8 @@ async function abfrageUndSpeichern() {
         operatingMarginTTM: data.OperatingMarginTTM,
         pegRatio: data.PEGRatio,
         peRatio: data.PERatio,
+        priceToBookRatio: data.PriceToBookRatio,
+        priceToSalesRatioTTM: data.PriceToSalesRatioTTM,
         profitMargin: data.ProfitMargin,
         quarterlyEarningsGrowthYOY: data.QuarterlyEarningsGrowthYOY,
         quarterlyRevenueGrowthYOY: data.QuarterlyRevenueGrowthYOY,
@@ -86,6 +90,7 @@ async function abfrageUndSpeichern() {
         revenuePerShareTTM: data.RevenuePerShareTTM,
         revenueTTM: data.RevenueTTM,
         sector: data.Sector,
+        trailingPE: data.TrailingPE,
       });
       await aeltesterDatensatz.save();
 
