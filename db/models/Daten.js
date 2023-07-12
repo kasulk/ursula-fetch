@@ -46,7 +46,7 @@ const datenSchema = new Schema(
     trailingPE: Number,
     forwardPE: Number,
     priceToSalesRatioTTM: Number,
-    priceToBookRatio: Number | String, //! fixen
+    priceToBookRatio: Number, //| String, //! fixen
     evToRevenue: Number,
     evToEBITDA: Number,
     beta: Number,
@@ -66,7 +66,7 @@ const datenSchema = new Schema(
     //
     //   Bruchwert52Week: Number,
     // Favorites: [String], // Field "Favorites" is Array of Strings
-    LogoURL: String, //! twelve data
+    // logoURL: String, //! twelve data
     // lastUpdated: Date,
   },
   // create a timestamps for createdAt and updatedAt
