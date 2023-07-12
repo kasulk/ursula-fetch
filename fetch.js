@@ -61,39 +61,39 @@ async function abfrageUndSpeichern() {
         beta: data.Beta,
         bookValue: data.BookValue,
         cik: data.CIK, // ?
-        currency: data.Currency,
-        country: data.Country,
+        currency: data.Currency, // e.g. "USD"
+        country: data.Country, // e.g. "USA"
         description: data.Description,
         dilutedEPSTTM: data.DilutedEPSTTM,
-        dividendPerShare: data.DividendPerShare,
-        dividendYield: data.DividendYield,
+        dividendPerShare: data.DividendPerShare, // e.g. "1.2"
+        dividendYield: data.DividendYield, // e.g. "0.0852"
         ebitda: data.EBITDA,
         eps: data.EPS,
         eps15x: (data.EPS * 15).toFixed(2),
         evToEBITDA: data.EVToEBITDA, // Enterprise Value to EBITDA (EV/EBITDA)
         evToRevenue: data.EVToRevenue, // Enterprise Value to Revenue (EV/R)
-        exchange: data.Exchange,
-        fiscalYearEnd: data.FiscalYearEnd,
+        exchange: data.Exchange, // e.g. "NASDAQ"
+        fiscalYearEnd: data.FiscalYearEnd, // e.g. "March"
         forwardPE: data.ForwardPE,
         grossProfitTTM: data.GrossProfitTTM,
-        industry: data.Industry,
-        latestQuarter: data.LatestQuarter,
-        marketCapitalization: data.MarketCapitalization,
-        name: data.Name,
+        industry: data.Industry, // e.g. "RETAIL-DRUG STORES AND PROPRIETARY STORES"
+        latestQuarter: data.LatestQuarter, // e.g. "2023-03-31"
+        marketCapitalization: data.MarketCapitalization, // e.g. "290498000"
+        name: data.Name, // e.g. "PetMed Express Inc"
         operatingMarginTTM: data.OperatingMarginTTM,
-        pegRatio: data.PEGRatio,
-        peRatio: data.PERatio,
+        pegRatio: data.PEGRatio, // e.g. "2.58"
+        peRatio: data.PERatio, // e.g. "1372"
         priceToBookRatio: data.PriceToBookRatio,
         priceToSalesRatioTTM: data.PriceToSalesRatioTTM,
-        profitMargin: data.ProfitMargin,
-        quarterlyEarningsGrowthYOY: data.QuarterlyEarningsGrowthYOY,
-        quarterlyRevenueGrowthYOY: data.QuarterlyRevenueGrowthYOY,
-        returnOnAssetsTTM: data.ReturnOnAssetsTTM,
-        returnOnEquityTTM: data.ReturnOnEquityTTM,
+        profitMargin: data.ProfitMargin, // e.g. "0.0009"
+        quarterlyEarningsGrowthYOY: data.QuarterlyEarningsGrowthYOY, // e.g. "-0.589"
+        quarterlyRevenueGrowthYOY: data.QuarterlyRevenueGrowthYOY, // e.g. "-0.054"
+        returnOnAssetsTTM: data.ReturnOnAssetsTTM, // e.g. "0.0031"
+        returnOnEquityTTM: data.ReturnOnEquityTTM, // e.g. "0.0017"
         revenuePerShareTTM: data.RevenuePerShareTTM,
-        revenueTTM: data.RevenueTTM,
-        sector: data.Sector,
-        trailingPE: data.TrailingPE,
+        revenueTTM: data.RevenueTTM, // e.g. "256858000"
+        sector: data.Sector, // e.g. "TRADE & SERVICES"
+        trailingPE: data.TrailingPE, // e.g. "1372"
       });
       await aeltesterDatensatz.save();
 

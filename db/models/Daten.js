@@ -46,7 +46,7 @@ const datenSchema = new Schema(
     trailingPE: Number,
     forwardPE: Number,
     priceToSalesRatioTTM: Number,
-    priceToBookRatio: Number,
+    priceToBookRatio: Number | String, //! fixen
     //
     evToRevenue: Number,
     evToEBITDA: Number,
