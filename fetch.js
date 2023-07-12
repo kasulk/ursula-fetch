@@ -62,6 +62,7 @@ async function abfrageUndSpeichern() {
         currency: data.Currency,
         country: data.Country,
         description: data.Description,
+        dilutedEPSTTM: data.DilutedEPSTTM,
         dividendPerShare: data.DividendPerShare,
         dividendYield: data.DividendYield,
         ebitda: data.EBITDA,
@@ -69,6 +70,7 @@ async function abfrageUndSpeichern() {
         eps15x: (data.EPS * 15).toFixed(2),
         exchange: data.Exchange,
         fiscalYearEnd: data.FiscalYearEnd,
+        grossProfitTTM: data.GrossProfitTTM,
         industry: data.Industry,
         latestQuarter: data.LatestQuarter,
         marketCapitalization: data.MarketCapitalization,
@@ -77,9 +79,12 @@ async function abfrageUndSpeichern() {
         pegRatio: data.PEGRatio,
         peRatio: data.PERatio,
         profitMargin: data.ProfitMargin,
+        quarterlyEarningsGrowthYOY: data.QuarterlyEarningsGrowthYOY,
+        quarterlyRevenueGrowthYOY: data.QuarterlyRevenueGrowthYOY,
         returnOnAssetsTTM: data.ReturnOnAssetsTTM,
         returnOnEquityTTM: data.ReturnOnEquityTTM,
         revenuePerShareTTM: data.RevenuePerShareTTM,
+        revenueTTM: data.RevenueTTM,
         sector: data.Sector,
       });
       await aeltesterDatensatz.save();

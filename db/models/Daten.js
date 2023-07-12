@@ -32,18 +32,18 @@ const datenSchema = new Schema(
     dividendYield: Number,
     eps: Number,
     eps15x: Number, // calulated
-    //
     revenuePerShareTTM: Number,
     profitMargin: Number,
     operatingMarginTTM: Number,
     returnOnAssetsTTM: Number,
     returnOnEquityTTM: Number,
     //
-    RevenueTTM: Number,
-    GrossProfitTTM: Number,
-    DilutedEPSTTM: Number,
-    QuarterlyEarningsGrowthYOY: Number,
-    QuarterlyRevenueGrowthYOY: Number,
+    revenueTTM: Number,
+    grossProfitTTM: Number,
+    dilutedEPSTTM: Number,
+    quarterlyEarningsGrowthYOY: Number,
+    quarterlyRevenueGrowthYOY: Number,
+    //
     AnalystTargetPrice: Number,
     TrailingPE: Number,
     ForwardPE: Number,
