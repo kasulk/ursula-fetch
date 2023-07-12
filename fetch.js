@@ -57,10 +57,13 @@ async function abfrageUndSpeichern() {
         // ...
         address: data.Address,
         assetType: data.AssetType,
+        bookValue: data.BookValue,
         cik: data.CIK,
         currency: data.Currency,
         country: data.Country,
         description: data.Description,
+        dividendPerShare: data.DividendPerShare,
+        dividendYield: data.DividendYield,
         ebitda: data.EBITDA,
         eps: data.EPS,
         eps15x: (data.EPS * 15).toFixed(2),

@@ -22,16 +22,16 @@ const datenSchema = new Schema(
     industry: String,
     address: String,
     fiscalYearEnd: String,
-    //
     latestQuarter: String,
     marketCapitalization: Number,
     ebitda: Number,
     peRatio: Number,
     pegRatio: Number,
     //
-    BookValue: Number,
-    DividendPerShare: Number,
-    DividendYield: Number,
+    bookValue: Number,
+    dividendPerShare: Number,
+    dividendYield: Number,
+    //
     eps: Number,
     eps15x: Number, // calulated
     RevenuePerShareTTM: Number,
