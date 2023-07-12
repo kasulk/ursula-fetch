@@ -73,8 +73,13 @@ async function abfrageUndSpeichern() {
         latestQuarter: data.LatestQuarter,
         marketCapitalization: data.MarketCapitalization,
         name: data.Name,
+        operatingMarginTTM: data.OperatingMarginTTM,
         pegRatio: data.PEGRatio,
         peRatio: data.PERatio,
+        profitMargin: data.ProfitMargin,
+        returnOnAssetsTTM: data.ReturnOnAssetsTTM,
+        returnOnEquityTTM: data.ReturnOnEquityTTM,
+        revenuePerShareTTM: data.RevenuePerShareTTM,
         sector: data.Sector,
       });
       await aeltesterDatensatz.save();

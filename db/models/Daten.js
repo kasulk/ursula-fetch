@@ -27,18 +27,18 @@ const datenSchema = new Schema(
     ebitda: Number,
     peRatio: Number,
     pegRatio: Number,
-    //
     bookValue: Number,
     dividendPerShare: Number,
     dividendYield: Number,
-    //
     eps: Number,
     eps15x: Number, // calulated
-    RevenuePerShareTTM: Number,
-    ProfitMargin: Number,
-    OperatingMarginTTM: Number,
-    ReturnOnAssetsTTM: Number,
-    ReturnOnEquityTTM: Number,
+    //
+    revenuePerShareTTM: Number,
+    profitMargin: Number,
+    operatingMarginTTM: Number,
+    returnOnAssetsTTM: Number,
+    returnOnEquityTTM: Number,
+    //
     RevenueTTM: Number,
     GrossProfitTTM: Number,
     DilutedEPSTTM: Number,
