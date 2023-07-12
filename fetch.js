@@ -55,14 +55,19 @@ async function abfrageUndSpeichern() {
         // Felder entsprechend der API-Antwort setzen
         // Beispiel: name: data.name,
         // ...
+        address: data.Address,
         assetType: data.AssetType,
         cik: data.CIK,
         currency: data.Currency,
+        country: data.Country,
         description: data.Description,
         eps: data.EPS,
         eps15x: (data.EPS * 15).toFixed(2),
         exchange: data.Exchange,
+        fiscalYearEnd: data.FiscalYearEnd,
+        industry: data.Industry,
         name: data.Name,
+        sector: data.Sector,
       });
       await aeltesterDatensatz.save();
 
