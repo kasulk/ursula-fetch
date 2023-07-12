@@ -17,21 +17,21 @@ const datenSchema = new Schema(
     cik: String,
     exchange: String,
     currency: String,
-    //
     country: String,
     sector: String,
     industry: String,
     address: String,
     fiscalYearEnd: String,
-    LatestQuarter: String,
-    MarketCapitalization: Number,
-    EBITDA: Number,
-    PERatio: Number,
-    PEGRatio: Number,
+    //
+    latestQuarter: String,
+    marketCapitalization: Number,
+    ebitda: Number,
+    peRatio: Number,
+    pegRatio: Number,
+    //
     BookValue: Number,
     DividendPerShare: Number,
     DividendYield: Number,
-    // EPS: Number,
     eps: Number,
     eps15x: Number, // calulated
     RevenuePerShareTTM: Number,

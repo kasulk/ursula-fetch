@@ -61,12 +61,17 @@ async function abfrageUndSpeichern() {
         currency: data.Currency,
         country: data.Country,
         description: data.Description,
+        ebitda: data.EBITDA,
         eps: data.EPS,
         eps15x: (data.EPS * 15).toFixed(2),
         exchange: data.Exchange,
         fiscalYearEnd: data.FiscalYearEnd,
         industry: data.Industry,
+        latestQuarter: data.LatestQuarter,
+        marketCapitalization: data.MarketCapitalization,
         name: data.Name,
+        pegRatio: data.PEGRatio,
+        peRatio: data.PERatio,
         sector: data.Sector,
       });
       await aeltesterDatensatz.save();
