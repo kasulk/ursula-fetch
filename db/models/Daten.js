@@ -47,11 +47,9 @@ const datenSchema = new Schema(
     forwardPE: Number,
     priceToSalesRatioTTM: Number,
     priceToBookRatio: Number | String, //! fixen
-    //
     evToRevenue: Number,
     evToEBITDA: Number,
     beta: Number,
-    //
     // 52WeekHigh: Number,
     // 52WeekLow: Number,
     // 50DayMovingAverage: Number,
@@ -61,13 +59,15 @@ const datenSchema = new Schema(
     // _52WeekLow: Number,
     //? _50DayMovingAverage: Number,
     //? _200DayMovingAverage: Number,
-    SharesOutstanding: Number,
-    DividendDate: String,
-    ExDividendDate: String,
+    //
+    sharesOutstanding: Number,
+    dividendDate: String,
+    exDividendDate: String,
+    //
     //   Bruchwert52Week: Number,
     // Favorites: [String], // Field "Favorites" is Array of Strings
-    LogoURL: String,
-    lastUpdated: Date,
+    LogoURL: String, //! twelve data
+    // lastUpdated: Date,
   },
   // create a timestamps for createdAt and updatedAt
   { timestamps: true } // https://mongoosejs.com/docs/timestamps.html

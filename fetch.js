@@ -65,6 +65,7 @@ async function abfrageUndSpeichern() {
         country: data.Country, // e.g. "USA"
         description: data.Description,
         dilutedEPSTTM: data.DilutedEPSTTM,
+        dividendDate: data.DividendDate, // e.g. "2023-06-12"
         dividendPerShare: data.DividendPerShare, // e.g. "1.2"
         dividendYield: data.DividendYield, // e.g. "0.0852"
         ebitda: data.EBITDA,
@@ -73,6 +74,7 @@ async function abfrageUndSpeichern() {
         evToEBITDA: data.EVToEBITDA, // Enterprise Value to EBITDA (EV/EBITDA)
         evToRevenue: data.EVToRevenue, // Enterprise Value to Revenue (EV/R)
         exchange: data.Exchange, // e.g. "NASDAQ"
+        exDividendDate: data.ExDividendDate, // e.g. "2023-06-05"
         fiscalYearEnd: data.FiscalYearEnd, // e.g. "March"
         forwardPE: data.ForwardPE,
         grossProfitTTM: data.GrossProfitTTM,
@@ -93,6 +95,7 @@ async function abfrageUndSpeichern() {
         revenuePerShareTTM: data.RevenuePerShareTTM,
         revenueTTM: data.RevenueTTM, // e.g. "256858000"
         sector: data.Sector, // e.g. "TRADE & SERVICES"
+        sharesOutstanding: data.SharesOutstanding, // e.g. "21173300"
         trailingPE: data.TrailingPE, // e.g. "1372"
       });
       await aeltesterDatensatz.save();
