@@ -31,8 +31,10 @@ const db = mongoose.connection;
 async function abfrageUndSpeichern() {
   try {
     // Ältesten Datensatz in der Datenbank finden
-    const aeltesterDatensatz = await Daten.findOne().sort("lastUpdated");
+    const aeltesterDatensatz = await Daten.findOne().sort("updatedAt");
     const singleApiLink = apiLink + aeltesterDatensatz.Symbol;
+
+    // console.log(aeltesterDatensatz);
 
     if (aeltesterDatensatz) {
       // API-Abfrage durchführen (mit node-fetch)
@@ -46,11 +48,15 @@ async function abfrageUndSpeichern() {
 
       // Daten speichern und den lastUpdated-Zeitstempel aktualisieren
       aeltesterDatensatz.set({
-        lastUpdated: Date.now(), // note: dank timestamp in mongoose model nicht mehr noetig...
+        // lastUpdated: Date.now(), // note: dank timestamp in mongoose model nicht mehr noetig...
         // Felder entsprechend der API-Antwort setzen
         // Beispiel: name: data.name,
         // ...
-        EPS: data.EPS,
+        assetType: data.AssetType,
+        eps: data.EPS,
+        eps15x: data.EPS * 15,
+        // EPS: data.EPS,
+        // epsx15: data.EPS * 15,
       });
       await aeltesterDatensatz.save();
 
