@@ -57,9 +57,10 @@ async function abfrageUndSpeichern() {
         // ...
         address: data.Address,
         analystTargetPrice: data.AnalystTargetPrice,
-        assetType: data.AssetType,
+        assetType: data.AssetType, // e.g. "Common Stock"
+        beta: data.Beta,
         bookValue: data.BookValue,
-        cik: data.CIK,
+        cik: data.CIK, // ?
         currency: data.Currency,
         country: data.Country,
         description: data.Description,
@@ -69,6 +70,8 @@ async function abfrageUndSpeichern() {
         ebitda: data.EBITDA,
         eps: data.EPS,
         eps15x: (data.EPS * 15).toFixed(2),
+        evToEBITDA: data.EVToEBITDA, // Enterprise Value to EBITDA (EV/EBITDA)
+        evToRevenue: data.EVToRevenue, // Enterprise Value to Revenue (EV/R)
         exchange: data.Exchange,
         fiscalYearEnd: data.FiscalYearEnd,
         forwardPE: data.ForwardPE,

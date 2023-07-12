@@ -42,16 +42,16 @@ const datenSchema = new Schema(
     dilutedEPSTTM: Number,
     quarterlyEarningsGrowthYOY: Number,
     quarterlyRevenueGrowthYOY: Number,
-    //
     analystTargetPrice: Number,
     trailingPE: Number,
     forwardPE: Number,
     priceToSalesRatioTTM: Number,
     priceToBookRatio: Number,
     //
-    EVToRevenue: Number,
-    EVToEBITDA: Number,
-    Beta: Number,
+    evToRevenue: Number,
+    evToEBITDA: Number,
+    beta: Number,
+    //
     // 52WeekHigh: Number,
     // 52WeekLow: Number,
     // 50DayMovingAverage: Number,
