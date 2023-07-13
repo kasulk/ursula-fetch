@@ -4,6 +4,12 @@ import mongoose from "mongoose";
 // const { Schema } = mongoose;
 const { Schema, connection } = mongoose;
 
+// Custom Type turns '-' into null using a set-function
+const NumberOrDashToNullType = {
+  type: Number,
+  set: (value) => (value === "-" ? null : value),
+};
+
 // Mongoose-Modell für die zu speichernden Daten definieren
 const datenSchema = new Schema(
   {
@@ -23,34 +29,34 @@ const datenSchema = new Schema(
     address: String,
     fiscalYearEnd: String,
     latestQuarter: String,
-    marketCapitalization: Schema.Types.Mixed,
-    ebitda: Schema.Types.Mixed,
-    peRatio: Schema.Types.Mixed,
-    pegRatio: Schema.Types.Mixed,
-    bookValue: Schema.Types.Mixed,
-    dividendPerShare: Schema.Types.Mixed,
-    dividendYield: Schema.Types.Mixed,
-    eps: Schema.Types.Mixed,
-    eps15x: Schema.Types.Mixed, // calulated
-    revenuePerShareTTM: Schema.Types.Mixed,
-    profitMargin: Schema.Types.Mixed,
-    operatingMarginTTM: Schema.Types.Mixed,
-    returnOnAssetsTTM: Schema.Types.Mixed,
-    returnOnEquityTTM: Schema.Types.Mixed,
-    revenueTTM: Schema.Types.Mixed,
-    grossProfitTTM: Schema.Types.Mixed,
-    dilutedEPSTTM: Schema.Types.Mixed,
-    quarterlyEarningsGrowthYOY: Schema.Types.Mixed,
-    quarterlyRevenueGrowthYOY: Schema.Types.Mixed,
-    analystTargetPrice: Schema.Types.Mixed,
-    trailingPE: Schema.Types.Mixed,
-    forwardPE: Schema.Types.Mixed,
-    priceToSalesRatioTTM: Schema.Types.Mixed,
+    marketCapitalization: NumberOrDashToNullType,
+    ebitda: NumberOrDashToNullType,
+    peRatio: NumberOrDashToNullType,
+    pegRatio: NumberOrDashToNullType,
+    bookValue: NumberOrDashToNullType,
+    dividendPerShare: NumberOrDashToNullType,
+    dividendYield: NumberOrDashToNullType,
+    eps: NumberOrDashToNullType,
+    eps15x: NumberOrDashToNullType, // calulated
+    revenuePerShareTTM: NumberOrDashToNullType,
+    profitMargin: NumberOrDashToNullType,
+    operatingMarginTTM: NumberOrDashToNullType,
+    returnOnAssetsTTM: NumberOrDashToNullType,
+    returnOnEquityTTM: NumberOrDashToNullType,
+    revenueTTM: NumberOrDashToNullType,
+    grossProfitTTM: NumberOrDashToNullType,
+    dilutedEPSTTM: NumberOrDashToNullType,
+    quarterlyEarningsGrowthYOY: NumberOrDashToNullType,
+    quarterlyRevenueGrowthYOY: NumberOrDashToNullType,
+    analystTargetPrice: NumberOrDashToNullType,
+    trailingPE: NumberOrDashToNullType,
+    forwardPE: NumberOrDashToNullType,
+    priceToSalesRatioTTM: NumberOrDashToNullType,
     // priceToBookRatio: Number,
-    priceToBookRatio: Schema.Types.Mixed,
-    evToRevenue: Schema.Types.Mixed,
-    evToEBITDA: Schema.Types.Mixed,
-    beta: Schema.Types.Mixed,
+    priceToBookRatio: NumberOrDashToNullType,
+    evToRevenue: NumberOrDashToNullType,
+    evToEBITDA: NumberOrDashToNullType,
+    beta: NumberOrDashToNullType,
     // 52WeekHigh: Number,
     // 52WeekLow: Number,
     // 50DayMovingAverage: Number,
@@ -61,7 +67,7 @@ const datenSchema = new Schema(
     //? _50DayMovingAverage: Number,
     //? _200DayMovingAverage: Number,
     //
-    sharesOutstanding: Schema.Types.Mixed,
+    sharesOutstanding: NumberOrDashToNullType,
     dividendDate: String,
     exDividendDate: String,
     //
