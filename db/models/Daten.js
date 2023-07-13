@@ -46,7 +46,8 @@ const datenSchema = new Schema(
     trailingPE: Number,
     forwardPE: Number,
     priceToSalesRatioTTM: Number,
-    priceToBookRatio: Number, //| String, //! fixen
+    // priceToBookRatio: Number, //| String, //! fixen
+    priceToBookRatio: Schema.Types.Mixed,
     evToRevenue: Number,
     evToEBITDA: Number,
     beta: Number,

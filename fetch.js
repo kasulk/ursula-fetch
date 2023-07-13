@@ -19,6 +19,13 @@ mongoose.connect(process.env.MONGODB_URI, {
 });
 const db = mongoose.connection;
 
+function turnToNumberOrNull(value) {
+  if (Number(value)) {
+    return Number(value);
+  }
+  return null;
+}
+
 // Mongoose-Modell für die zu speichernden Daten definieren
 //! wird von db/models/Daten.js importiert
 // const DatenSchema = new mongoose.Schema({
@@ -85,7 +92,12 @@ async function abfrageUndSpeichern() {
         operatingMarginTTM: data.OperatingMarginTTM,
         pegRatio: data.PEGRatio, // e.g. "2.58"
         peRatio: data.PERatio, // e.g. "1372"
-        priceToBookRatio: data.PriceToBookRatio,
+        // priceToBookRatio: data.PriceToBookRatio,
+        // priceToBookRatio: Number(data.PriceToBookRatio)
+        //   ? // ? Number(data.PriceToBookRatio.toFixed(2))
+        //     Number(data.PriceToBookRatio)
+        //   : null,
+        priceToBookRatio: turnToNumberOrNull(data.PriceToBookRatio),
         priceToSalesRatioTTM: data.PriceToSalesRatioTTM,
         profitMargin: data.ProfitMargin, // e.g. "0.0009"
         quarterlyEarningsGrowthYOY: data.QuarterlyEarningsGrowthYOY, // e.g. "-0.589"
