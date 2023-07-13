@@ -5,9 +5,18 @@ import mongoose from "mongoose";
 const { Schema, connection } = mongoose;
 
 // Custom SchemaType, turns '-' into null using a set-function
-const NumberOrDashToNullType = {
+/* not used because need to calculate with some values to create
+/  new/special values before storing them to the db...
+const NumberAsNumberOrNull = {
   type: Number,
   set: (value) => (value === "-" ? null : value),
+};
+*/
+
+// Custom SchemaType, accepts Number and/or null
+const NumberOrNull = {
+  type: Number,
+  set: (value) => (value ? value : null),
 };
 
 // Mongoose-Modell für die zu speichernden Daten definieren
@@ -29,34 +38,34 @@ const datenSchema = new Schema(
     address: String,
     fiscalYearEnd: String,
     latestQuarter: String,
-    marketCapitalization: NumberOrDashToNullType,
-    ebitda: NumberOrDashToNullType,
-    peRatio: NumberOrDashToNullType,
-    pegRatio: NumberOrDashToNullType,
-    bookValue: NumberOrDashToNullType,
-    dividendPerShare: NumberOrDashToNullType,
-    dividendYield: NumberOrDashToNullType,
-    eps: NumberOrDashToNullType,
-    eps15x: NumberOrDashToNullType, // calulated
-    revenuePerShareTTM: NumberOrDashToNullType,
-    profitMargin: NumberOrDashToNullType,
-    operatingMarginTTM: NumberOrDashToNullType,
-    returnOnAssetsTTM: NumberOrDashToNullType,
-    returnOnEquityTTM: NumberOrDashToNullType,
-    revenueTTM: NumberOrDashToNullType,
-    grossProfitTTM: NumberOrDashToNullType,
-    dilutedEPSTTM: NumberOrDashToNullType,
-    quarterlyEarningsGrowthYOY: NumberOrDashToNullType,
-    quarterlyRevenueGrowthYOY: NumberOrDashToNullType,
-    analystTargetPrice: NumberOrDashToNullType,
-    trailingPE: NumberOrDashToNullType,
-    forwardPE: NumberOrDashToNullType,
-    priceToSalesRatioTTM: NumberOrDashToNullType,
+    marketCapitalization: NumberOrNull,
+    ebitda: NumberOrNull,
+    peRatio: NumberOrNull,
+    pegRatio: NumberOrNull,
+    bookValue: NumberOrNull,
+    dividendPerShare: NumberOrNull,
+    dividendYield: NumberOrNull,
+    eps: NumberOrNull,
+    eps15x: NumberOrNull, // calulated
+    revenuePerShareTTM: NumberOrNull,
+    profitMargin: NumberOrNull,
+    operatingMarginTTM: NumberOrNull,
+    returnOnAssetsTTM: NumberOrNull,
+    returnOnEquityTTM: NumberOrNull,
+    revenueTTM: NumberOrNull,
+    grossProfitTTM: NumberOrNull,
+    dilutedEPSTTM: NumberOrNull,
+    quarterlyEarningsGrowthYOY: NumberOrNull,
+    quarterlyRevenueGrowthYOY: NumberOrNull,
+    analystTargetPrice: NumberOrNull,
+    trailingPE: NumberOrNull,
+    forwardPE: NumberOrNull,
+    priceToSalesRatioTTM: NumberOrNull,
     // priceToBookRatio: Number,
-    priceToBookRatio: NumberOrDashToNullType,
-    evToRevenue: NumberOrDashToNullType,
-    evToEBITDA: NumberOrDashToNullType,
-    beta: NumberOrDashToNullType,
+    priceToBookRatio: NumberOrNull,
+    evToRevenue: NumberOrNull,
+    evToEBITDA: NumberOrNull,
+    beta: NumberOrNull,
     // 52WeekHigh: Number,
     // 52WeekLow: Number,
     // 50DayMovingAverage: Number,
@@ -67,7 +76,7 @@ const datenSchema = new Schema(
     //? _50DayMovingAverage: Number,
     //? _200DayMovingAverage: Number,
     //
-    sharesOutstanding: NumberOrDashToNullType,
+    sharesOutstanding: NumberOrNull,
     dividendDate: String,
     exDividendDate: String,
     //
