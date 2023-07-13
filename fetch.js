@@ -7,6 +7,7 @@ import connection from "mongoose";
 import Daten from "./db/models/Daten.js";
 import mongoose from "mongoose";
 // import Daten from "../db/models/Daten";
+import { toNumberOrDashToNull } from "./utils/dataUtils.ts";
 
 const API_KEY_AV = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=OVERVIEW&symbol=`;
@@ -18,13 +19,6 @@ mongoose.connect(process.env.MONGODB_URI, {
   useUnifiedTopology: true,
 });
 const db = mongoose.connection;
-
-function turnToNumberOrNull(value) {
-  if (Number(value)) {
-    return Number(value);
-  }
-  return null;
-}
 
 // Mongoose-Modell für die zu speichernden Daten definieren
 //! wird von db/models/Daten.js importiert
@@ -55,7 +49,7 @@ async function abfrageUndSpeichern() {
       const data = await response.json();
       // console.log("fetched data:", data);
 
-      // Daten speichern und den lastUpdated-Zeitstempel aktualisieren
+      // Daten speichern //// und den lastUpdated-Zeitstempel aktualisieren
       //! if the data from the API is the same as in the db, data won't be updated (incl. the timestamp!)
       aeltesterDatensatz.set({
         // lastUpdated: Date.now(), // note: dank timestamp in mongoose model nicht mehr noetig...
@@ -63,52 +57,56 @@ async function abfrageUndSpeichern() {
         // Beispiel: name: data.name,
         // ...
         address: data.Address,
-        analystTargetPrice: data.AnalystTargetPrice,
+        analystTargetPrice: toNumberOrDashToNull(data.AnalystTargetPrice),
         assetType: data.AssetType, // e.g. "Common Stock"
-        beta: data.Beta,
-        bookValue: data.BookValue,
-        cik: data.CIK, // ?
+        beta: toNumberOrDashToNull(data.Beta),
+        bookValue: toNumberOrDashToNull(data.BookValue),
+        cik: toNumberOrDashToNull(data.CIK), // ?
         currency: data.Currency, // e.g. "USD"
         country: data.Country, // e.g. "USA"
         description: data.Description,
-        dilutedEPSTTM: data.DilutedEPSTTM,
+        dilutedEPSTTM: toNumberOrDashToNull(data.DilutedEPSTTM),
         dividendDate: data.DividendDate, // e.g. "2023-06-12"
-        dividendPerShare: data.DividendPerShare, // e.g. "1.2"
-        dividendYield: data.DividendYield, // e.g. "0.0852"
-        ebitda: data.EBITDA,
-        eps: data.EPS,
-        eps15x: (data.EPS * 15).toFixed(2),
-        evToEBITDA: data.EVToEBITDA, // Enterprise Value to EBITDA (EV/EBITDA)
-        evToRevenue: data.EVToRevenue, // Enterprise Value to Revenue (EV/R)
+        dividendPerShare: toNumberOrDashToNull(data.DividendPerShare), // e.g. "1.2"
+        dividendYield: toNumberOrDashToNull(data.DividendYield), // e.g. "0.0852"
+        ebitda: toNumberOrDashToNull(data.EBITDA),
+        eps: toNumberOrDashToNull(data.EPS),
+        // eps15x: (toNumberOrDashToNull(data.EPS) * 15).toFixed(2),
+        evToEBITDA: toNumberOrDashToNull(data.EVToEBITDA), // Enterprise Value to EBITDA (EV/EBITDA)
+        evToRevenue: toNumberOrDashToNull(data.EVToRevenue), // Enterprise Value to Revenue (EV/R)
         exchange: data.Exchange, // e.g. "NASDAQ"
         exDividendDate: data.ExDividendDate, // e.g. "2023-06-05"
         fiscalYearEnd: data.FiscalYearEnd, // e.g. "March"
-        forwardPE: data.ForwardPE,
-        grossProfitTTM: data.GrossProfitTTM,
+        forwardPE: toNumberOrDashToNull(data.ForwardPE),
+        grossProfitTTM: toNumberOrDashToNull(data.GrossProfitTTM),
         industry: data.Industry, // e.g. "RETAIL-DRUG STORES AND PROPRIETARY STORES"
         latestQuarter: data.LatestQuarter, // e.g. "2023-03-31"
-        marketCapitalization: data.MarketCapitalization, // e.g. "290498000"
+        marketCapitalization: toNumberOrDashToNull(data.MarketCapitalization), // e.g. "290498000"
         name: data.Name, // e.g. "PetMed Express Inc"
-        operatingMarginTTM: data.OperatingMarginTTM,
-        pegRatio: data.PEGRatio, // e.g. "2.58"
-        peRatio: data.PERatio, // e.g. "1372"
+        operatingMarginTTM: toNumberOrDashToNull(data.OperatingMarginTTM),
+        pegRatio: toNumberOrDashToNull(data.PEGRatio), // e.g. "2.58"
+        peRatio: toNumberOrDashToNull(data.PERatio), // e.g. "1372"
         // priceToBookRatio: Number(data.PriceToBookRatio)
         //   ? // ? Number(data.PriceToBookRatio.toFixed(2))
         //     Number(data.PriceToBookRatio)
         //   : null,
-        // priceToBookRatio: turnToNumberOrNull(data.PriceToBookRatio),
-        priceToBookRatio: data.PriceToBookRatio,
-        priceToSalesRatioTTM: data.PriceToSalesRatioTTM,
-        profitMargin: data.ProfitMargin, // e.g. "0.0009"
-        quarterlyEarningsGrowthYOY: data.QuarterlyEarningsGrowthYOY, // e.g. "-0.589"
-        quarterlyRevenueGrowthYOY: data.QuarterlyRevenueGrowthYOY, // e.g. "-0.054"
-        returnOnAssetsTTM: data.ReturnOnAssetsTTM, // e.g. "0.0031"
-        returnOnEquityTTM: data.ReturnOnEquityTTM, // e.g. "0.0017"
-        revenuePerShareTTM: data.RevenuePerShareTTM,
-        revenueTTM: data.RevenueTTM, // e.g. "256858000"
+        priceToBookRatio: toNumberOrDashToNull(data.PriceToBookRatio),
+        // priceToBookRatio: data.PriceToBookRatio,
+        priceToSalesRatioTTM: toNumberOrDashToNull(data.PriceToSalesRatioTTM),
+        profitMargin: toNumberOrDashToNull(data.ProfitMargin), // e.g. "0.0009"
+        quarterlyEarningsGrowthYOY: toNumberOrDashToNull(
+          data.QuarterlyEarningsGrowthYOY
+        ), // e.g. "-0.589"
+        quarterlyRevenueGrowthYOY: toNumberOrDashToNull(
+          data.QuarterlyRevenueGrowthYOY
+        ), // e.g. "-0.054"
+        returnOnAssetsTTM: toNumberOrDashToNull(data.ReturnOnAssetsTTM), // e.g. "0.0031"
+        returnOnEquityTTM: toNumberOrDashToNull(data.ReturnOnEquityTTM), // e.g. "0.0017"
+        revenuePerShareTTM: toNumberOrDashToNull(data.RevenuePerShareTTM),
+        revenueTTM: toNumberOrDashToNull(data.RevenueTTM), // e.g. "256858000"
         sector: data.Sector, // e.g. "TRADE & SERVICES"
-        sharesOutstanding: data.SharesOutstanding, // e.g. "21173300"
-        trailingPE: data.TrailingPE, // e.g. "1372"
+        sharesOutstanding: toNumberOrDashToNull(data.SharesOutstanding), // e.g. "21173300"
+        trailingPE: toNumberOrDashToNull(data.TrailingPE), // e.g. "1372"
       });
       await aeltesterDatensatz.save();
 

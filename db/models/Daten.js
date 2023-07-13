@@ -38,7 +38,10 @@ const datenSchema = new Schema(
     address: String,
     fiscalYearEnd: String,
     latestQuarter: String,
+    dividendDate: String,
+    exDividendDate: String,
     marketCapitalization: NumberOrNull,
+    // marketCapitalization: Number,
     ebitda: NumberOrNull,
     peRatio: NumberOrNull,
     pegRatio: NumberOrNull,
@@ -65,6 +68,7 @@ const datenSchema = new Schema(
     priceToBookRatio: NumberOrNull,
     evToRevenue: NumberOrNull,
     evToEBITDA: NumberOrNull,
+    sharesOutstanding: NumberOrNull,
     beta: NumberOrNull,
     // 52WeekHigh: Number,
     // 52WeekLow: Number,
@@ -75,12 +79,7 @@ const datenSchema = new Schema(
     // _52WeekLow: Number,
     //? _50DayMovingAverage: Number,
     //? _200DayMovingAverage: Number,
-    //
-    sharesOutstanding: NumberOrNull,
-    dividendDate: String,
-    exDividendDate: String,
-    //
-    //   Bruchwert52Week: Number,
+    // Bruchwert52Week: Number,
     // Favorites: [String], // Field "Favorites" is Array of Strings
     // logoURL: String, //! twelve data
     // lastUpdated: Date,
