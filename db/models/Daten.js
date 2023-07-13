@@ -13,7 +13,7 @@ const NumberAsNumberOrNull = {
 };
 */
 
-// Custom SchemaType, accepts Number and/or null
+// Custom SchemaType, accepts Number or null
 const NumberOrNull = {
   type: Number,
   set: (value) => (value ? value : null),
