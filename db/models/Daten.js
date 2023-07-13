@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 // const { Schema } = mongoose;
 const { Schema, connection } = mongoose;
 
-// Custom Type turns '-' into null using a set-function
+// Custom SchemaType, turns '-' into null using a set-function
 const NumberOrDashToNullType = {
   type: Number,
   set: (value) => (value === "-" ? null : value),
