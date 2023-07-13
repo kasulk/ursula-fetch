@@ -16,39 +16,24 @@ mongoose.connect(process.env.MONGODB_URI, {
 });
 const db = mongoose.connection;
 
-// Mongoose-Modell für die zu speichernden Daten definieren
-//! wird von db/models/Daten.js importiert
-// const DatenSchema = new mongoose.Schema({
-//   link: String,
-//   lastUpdated: Date,
-// });
-// const Daten = mongoose.model("Daten", DatenSchema);
-
 // Funktion, um die API-Abfrage durchzuführen und die Daten zu speichern
 async function abfrageUndSpeichern() {
   try {
     // Ältesten Datensatz in der Datenbank finden
     const aeltesterDatensatz = await Daten.findOne().sort("updatedAt");
-    // const singleApiLink = apiLink + aeltesterDatensatz.Symbol;
     const singleApiLink = apiLink + aeltesterDatensatz.ticker;
-
-    // console.log(aeltesterDatensatz);
 
     if (aeltesterDatensatz) {
       // API-Abfrage durchführen (mit node-fetch)
       console.log(
-        // `Fetche AlphaVantage Overview-Daten fuer ${aeltesterDatensatz.Symbol}`
-        `Fetche AlphaVantage Overview-Daten fuer ${aeltesterDatensatz.ticker}`
+        `--> Fetche AlphaVantage Overview-Daten fuer ${aeltesterDatensatz.ticker}`
       );
-      // const response = await fetch(aeltesterDatensatz.link);  //! chatti
       const response = await fetch(singleApiLink);
       const data = await response.json();
-      // console.log("fetched data:", data);
 
-      // Daten speichern //// und den lastUpdated-Zeitstempel aktualisieren
+      // Daten speichern
       //! if the data from the API is the same as in the db, data won't be updated (incl. the timestamp!)
       aeltesterDatensatz.set({
-        // lastUpdated: Date.now(), // note: dank timestamp in mongoose model nicht mehr noetig...
         // Felder entsprechend der API-Antwort setzen
         // Beispiel: name: data.name,
         // ...
@@ -67,7 +52,7 @@ async function abfrageUndSpeichern() {
         dividendYield: toNumberOrDashToNull(data.DividendYield), // e.g. "0.0852"
         ebitda: toNumberOrDashToNull(data.EBITDA),
         eps: toNumberOrDashToNull(data.EPS),
-        // eps15x: (toNumberOrDashToNull(data.EPS) * 15).toFixed(2),
+        //! eps15x: (toNumberOrDashToNull(data.EPS) * 15).toFixed(2),
         evToEBITDA: toNumberOrDashToNull(data.EVToEBITDA), // Enterprise Value to EBITDA (EV/EBITDA)
         evToRevenue: toNumberOrDashToNull(data.EVToRevenue), // Enterprise Value to Revenue (EV/R)
         exchange: data.Exchange, // e.g. "NASDAQ"
@@ -82,10 +67,6 @@ async function abfrageUndSpeichern() {
         operatingMarginTTM: toNumberOrDashToNull(data.OperatingMarginTTM),
         pegRatio: toNumberOrDashToNull(data.PEGRatio), // e.g. "2.58"
         peRatio: toNumberOrDashToNull(data.PERatio), // e.g. "1372"
-        // priceToBookRatio: Number(data.PriceToBookRatio)
-        //   ? // ? Number(data.PriceToBookRatio.toFixed(2))
-        //     Number(data.PriceToBookRatio)
-        //   : null,
         priceToBookRatio: toNumberOrDashToNull(data.PriceToBookRatio),
         // priceToBookRatio: data.PriceToBookRatio,
         priceToSalesRatioTTM: toNumberOrDashToNull(data.PriceToSalesRatioTTM),
