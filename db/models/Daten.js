@@ -9,7 +9,7 @@ const datenSchema = new Schema(
   {
     // Symbol: { type: String, required: true },
     ticker: { type: String, required: true },
-    Price: Number,
+    // Price: Number,
     // DataAsOf: String,
     assetType: String,
     name: String,
@@ -46,7 +46,7 @@ const datenSchema = new Schema(
     trailingPE: Number,
     forwardPE: Number,
     priceToSalesRatioTTM: Number,
-    // priceToBookRatio: Number, //| String, //! fixen
+    // priceToBookRatio: Number,
     priceToBookRatio: Schema.Types.Mixed,
     evToRevenue: Number,
     evToEBITDA: Number,
