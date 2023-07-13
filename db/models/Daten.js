@@ -16,7 +16,9 @@ const NumberAsNumberOrNull = {
 // Custom SchemaType, accepts Number or null
 const NumberOrNull = {
   type: Number,
-  set: (value) => (value ? value : null),
+  // todo: 0 is turned to null... e.g. MCD@returnOnEquityTTM
+  // set: (value) => (value ? value : null), //! turns 0 to null...
+  set: (value) => (Number(value) ? Number(value) : null),
 };
 
 // Mongoose-Modell für die zu speichernden Daten definieren
