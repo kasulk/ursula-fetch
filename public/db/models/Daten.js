@@ -1,9 +1,12 @@
-import mongoose from "mongoose";
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const mongoose_1 = __importDefault(require("mongoose"));
 // import { connect, connection, Schema, model } from "mongoose";
-
 // const { Schema } = mongoose;
-const { Schema, connection } = mongoose;
-
+const { Schema, connection } = mongoose_1.default;
 // Custom SchemaType, turns '-' into null using a set-function
 /* not used because need to calculate with some values to create
 /  new/special values before storing them to the db...
@@ -12,18 +15,15 @@ const NumberAsNumberOrNull = {
   set: (value) => (value === "-" ? null : value),
 };
 */
-
 // Custom SchemaType, accepts Number or null
 const NumberOrNull = {
-  type: Number,
-  // todo: 0 is turned to null... e.g. MCD@returnOnEquityTTM
-  // set: (value) => (value ? value : null), //! turns 0 to null...
-  set: (value) => (Number(value) ? Number(value) : null),
+    type: Number,
+    // todo: 0 is turned to null... e.g. MCD@returnOnEquityTTM
+    // set: (value) => (value ? value : null), //! turns 0 to null...
+    set: (value) => (Number(value) ? Number(value) : null),
 };
-
 // Mongoose-Modell für die zu speichernden Daten definieren
-const datenSchema = new Schema(
-  {
+const datenSchema = new Schema({
     // Symbol: { type: String, required: true },
     ticker: { type: String, required: true },
     // Price: Number,
@@ -51,7 +51,7 @@ const datenSchema = new Schema(
     dividendPerShare: NumberOrNull,
     dividendYield: NumberOrNull,
     eps: NumberOrNull,
-    eps15x: NumberOrNull, // calulated
+    eps15x: NumberOrNull,
     revenuePerShareTTM: NumberOrNull,
     profitMargin: NumberOrNull,
     operatingMarginTTM: NumberOrNull,
@@ -85,12 +85,10 @@ const datenSchema = new Schema(
     // Favorites: [String], // Field "Favorites" is Array of Strings
     // logoURL: String, //! twelve data
     // lastUpdated: Date,
-  },
-  // create a timestamps for createdAt and updatedAt
-  { timestamps: true } // https://mongoosejs.com/docs/timestamps.html
+}, 
+// create a timestamps for createdAt and updatedAt
+{ timestamps: true } // https://mongoosejs.com/docs/timestamps.html
 );
-
 // check whether the model with this name has already been compiled and if yes, take the already compiled model
-const Daten = mongoose.models.Daten || mongoose.model("Daten", datenSchema);
-
-export default Daten;
+const Daten = mongoose_1.default.models.Daten || mongoose_1.default.model("Daten", datenSchema);
+exports.default = Daten;

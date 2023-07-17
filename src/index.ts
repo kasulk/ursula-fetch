@@ -1,19 +1,85 @@
 import "dotenv/config";
 import fetch from "node-fetch";
-import mongoose from "mongoose";
+import mongoose, { ConnectOptions } from "mongoose";
 import connection from "mongoose";
-import Daten from "../db/models/Daten.js";
-import { toNumberOrDashToNull } from "../utils/dataUtils.js";
+// import Daten from "../public/db/models/Daten.js";
+// import Daten from "../public/db/models/Daten";
+// import DatenModel from "../types/Daten.js";
 
+import { toNumberOrDashToNull } from "./utils/dataUtils.js";
+// import Daten from "../types/Daten.js";
+import Daten from "./db/models/Daten";
+
+type MongooseConnectionOptions = ConnectOptions & {
+  // interface MongooseConnectionOptions {
+  useNewUrlParser: boolean;
+  useUnifiedTopology: boolean;
+};
+
+type ApiResponse = {
+  Address: string;
+  AnalystTargetPrice: string;
+  AssetType: string;
+  Beta: string;
+  BookValue: string;
+  CIK: string;
+  Currency: string;
+  Country: string;
+  Description: string;
+  DilutedEPSTTM: string;
+  DividendDate: string;
+  DividendPerShare: string;
+  DividendYield: string;
+  EBITDA: string;
+  EPS: string;
+  EVToEBITDA: string;
+  EVToRevenue: string;
+  Exchange: string;
+  ExDividendDate: string;
+  FiscalYearEnd: string;
+  ForwardPE: string;
+  GrossProfitTTM: string;
+  Industry: string;
+  LatestQuarter: string;
+  MarketCapitalization: string;
+  Name: string;
+  OperatingMarginTTM: string;
+  PEGRatio: string;
+  PERatio: string;
+  PriceToBookRatio: string;
+  // PriceToBookRatio: string
+  PriceToSalesRatioTTM: string;
+  ProfitMargin: string;
+  QuarterlyEarningsGrowthYOY: string;
+  QuarterlyRevenueGrowthYOY: string;
+  ReturnOnAssetsTTM: string;
+  ReturnOnEquityTTM: string;
+  RevenuePerShareTTM: string;
+  RevenueTTM: string;
+  Sector: string;
+  SharesOutstanding: string;
+  TrailingPE: string;
+};
+
+const MONGODB_URI = process.env.MONGODB_URI || "";
 const API_KEY_AV = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=OVERVIEW&symbol=`;
 const fetchIntervall = 3 * 1000; // 15 seconds
 
-// Verbindung zur MongoDB-Datenbank herstellen
-mongoose.connect(process.env.MONGODB_URI, {
+const mongooseConnectionOptions: MongooseConnectionOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+};
+
+// Verbindung zur MongoDB-Datenbank herstellen
+mongoose
+  .connect(MONGODB_URI, mongooseConnectionOptions)
+  .then(() => {
+    console.log("MongoDB connected successfully!");
+  })
+  .catch((error) => {
+    console.error("MongoDB connection error:", error);
+  });
 const db = mongoose.connection;
 
 // Funktion, um die API-Abfrage durchzuführen und die Daten zu speichern
@@ -29,7 +95,7 @@ async function abfrageUndSpeichern() {
         `--> Fetche AlphaVantage Overview-Daten fuer ${aeltesterDatensatz.ticker}`
       );
       const response = await fetch(singleApiLink);
-      const data = await response.json();
+      const data = (await response.json()) as ApiResponse;
 
       // Daten speichern
       //! if the data from the API is the same as in the db, data won't be updated (incl. the timestamp!)
