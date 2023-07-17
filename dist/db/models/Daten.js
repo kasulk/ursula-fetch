@@ -1,12 +1,7 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = __importDefault(require("mongoose"));
+import mongoose from "mongoose";
 // import { connect, connection, Schema, model } from "mongoose";
 // const { Schema } = mongoose;
-const { Schema, connection } = mongoose_1.default;
+const { Schema, connection } = mongoose;
 // Custom SchemaType, turns '-' into null using a set-function
 /* not used because need to calculate with some values to create
 /  new/special values before storing them to the db...
@@ -90,5 +85,5 @@ const datenSchema = new Schema({
 { timestamps: true } // https://mongoosejs.com/docs/timestamps.html
 );
 // check whether the model with this name has already been compiled and if yes, take the already compiled model
-const Daten = mongoose_1.default.models.Daten || mongoose_1.default.model("Daten", datenSchema);
-exports.default = Daten;
+const Daten = mongoose.models.Daten || mongoose.model("Daten", datenSchema);
+export default Daten;

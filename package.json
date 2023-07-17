@@ -1,5 +1,5 @@
 {
-  "main": "fetch.js",
+  "main": "index.js",
   "type": "module",
   "dependencies": {
     "@types/mongoose": "^5.11.97",

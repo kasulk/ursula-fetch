@@ -1,17 +1,17 @@
 import "dotenv/config";
 import fetch from "node-fetch";
+// import fetch from "../node_modules/node-fetch/@types/index";
 import mongoose, { ConnectOptions } from "mongoose";
-import connection from "mongoose";
-// import Daten from "../public/db/models/Daten.js";
-// import Daten from "../public/db/models/Daten";
-// import DatenModel from "../types/Daten.js";
+// import { toNumberOrDashToNull } from "./utils/dataUtils.js";
+// import Daten from "./db/models/Daten";
+import Daten from "./db/models/Daten.js";
 
-import { toNumberOrDashToNull } from "./utils/dataUtils.js";
-// import Daten from "../types/Daten.js";
-import Daten from "./db/models/Daten";
+function toNumberOrDashToNull(value: string): number | null {
+  //  return Number(value) ? Number(value) : null;
+  return value === "-" ? null : Number(value);
+}
 
 type MongooseConnectionOptions = ConnectOptions & {
-  // interface MongooseConnectionOptions {
   useNewUrlParser: boolean;
   useUnifiedTopology: boolean;
 };
