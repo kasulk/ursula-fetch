@@ -2,8 +2,8 @@ import "dotenv/config";
 import fetch from "node-fetch";
 import mongoose from "mongoose";
 import connection from "mongoose";
-import Daten from "./db/models/Daten.js";
-import { toNumberOrDashToNull } from "./utils/dataUtils.js";
+import Daten from "../db/models/Daten.js";
+import { toNumberOrDashToNull } from "../utils/dataUtils.js";
 
 const API_KEY_AV = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=OVERVIEW&symbol=`;
