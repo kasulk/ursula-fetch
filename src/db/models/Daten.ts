@@ -15,7 +15,7 @@ const datenSchema = new Schema(
   {
     // Symbol: { type: String, required: true },
     ticker: { type: String, required: true },
-    // price: Number,
+    // price: NumberOrNull, //! twelve data
     address: String,
     assetType: String,
     cik: String,
@@ -58,13 +58,13 @@ const datenSchema = new Schema(
     revenueTTM: NumberOrNull,
     sharesOutstanding: NumberOrNull,
     trailingPE: NumberOrNull,
-    // 52WeekHigh: Number, //! twelve data
-    // 52WeekLow: Number,//! twelve data
-    // 50DayMovingAverage: Number, //!twelve data
-    // 200DayMovingAverage: Number,//!twelve data
+    // 52WeekHigh: NumberOrNull, //! twelve data
+    // 52WeekLow: NumberOrNull,//! twelve data
+    // 50DayMovingAverage: NumberOrNull, //!twelve data
+    // 200DayMovingAverage: NumberOrNull,//!twelve data
     //? _50DayMovingAverage: Number,
     //? _200DayMovingAverage: Number,
-    // Bruchwert52Week: Number,
+    // Bruchwert52Week: Number, // calculated
     // Favorites: [String], // Field "Favorites" is Array of Strings
     // logoURL: String, //! twelve data
   },
