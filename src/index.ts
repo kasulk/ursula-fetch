@@ -1,7 +1,7 @@
 import "dotenv/config";
 import fetch from "node-fetch";
 import mongoose, { ConnectOptions } from "mongoose";
-import { toNumberOrDashToNull } from "./utils/dataUtils.js";
+import { toNumberOrDashToNull } from "./utils/dataHelpers.js";
 import Daten from "./db/models/Daten.js";
 
 type MongooseConnectionOptions = ConnectOptions & {
