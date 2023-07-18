@@ -84,7 +84,6 @@ function abfrageUndSpeichern() {
                     pegRatio: toNumberOrDashToNull(data.PEGRatio),
                     peRatio: toNumberOrDashToNull(data.PERatio),
                     priceToBookRatio: toNumberOrDashToNull(data.PriceToBookRatio),
-                    // priceToBookRatio: data.PriceToBookRatio,
                     priceToSalesRatioTTM: toNumberOrDashToNull(data.PriceToSalesRatioTTM),
                     profitMargin: toNumberOrDashToNull(data.ProfitMargin),
                     quarterlyEarningsGrowthYOY: toNumberOrDashToNull(data.QuarterlyEarningsGrowthYOY),

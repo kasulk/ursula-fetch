@@ -5,7 +5,6 @@ import { toNumberOrDashToNull } from "./utils/dataHelpers.js";
 import Daten from "./db/models/Daten.js";
 
 const MONGODB_URI = process.env.MONGODB_URI; // || ''
-
 const API_KEY_AV = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=OVERVIEW&symbol=`;
 const fetchIntervall = 10 * 1000; // 15 seconds
@@ -85,7 +84,6 @@ async function abfrageUndSpeichern() {
         pegRatio: toNumberOrDashToNull(data.PEGRatio), // e.g. "2.58"
         peRatio: toNumberOrDashToNull(data.PERatio), // e.g. "1372"
         priceToBookRatio: toNumberOrDashToNull(data.PriceToBookRatio),
-        // priceToBookRatio: data.PriceToBookRatio,
         priceToSalesRatioTTM: toNumberOrDashToNull(data.PriceToSalesRatioTTM),
         profitMargin: toNumberOrDashToNull(data.ProfitMargin), // e.g. "0.0009"
         quarterlyEarningsGrowthYOY: toNumberOrDashToNull(
