@@ -10,12 +10,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import "dotenv/config";
 import fetch from "node-fetch";
 import mongoose from "mongoose";
-// import { toNumberOrDashToNull } from "./utils/dataUtils.js";
+import { toNumberOrDashToNull } from "./utils/dataUtils.js";
 import Daten from "./db/models/Daten.js";
-function toNumberOrDashToNull(value) {
-    //  return Number(value) ? Number(value) : null;
-    return value === "-" ? null : Number(value);
-}
 const MONGODB_URI = process.env.MONGODB_URI; // || ''
 const API_KEY_AV = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=OVERVIEW&symbol=`;

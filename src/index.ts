@@ -1,13 +1,13 @@
 import "dotenv/config";
 import fetch from "node-fetch";
 import mongoose, { ConnectOptions } from "mongoose";
-// import { toNumberOrDashToNull } from "./utils/dataUtils.js";
+import { toNumberOrDashToNull } from "./utils/dataUtils.js";
 import Daten from "./db/models/Daten.js";
 
-function toNumberOrDashToNull(value: string): number | null {
-  //  return Number(value) ? Number(value) : null;
-  return value === "-" ? null : Number(value);
-}
+// function toNumberOrDashToNull(value: string): number | null {
+//   //  return Number(value) ? Number(value) : null;
+//   return value === "-" ? null : Number(value);
+// }
 
 type MongooseConnectionOptions = ConnectOptions & {
   useNewUrlParser: boolean;
