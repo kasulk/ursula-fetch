@@ -4,11 +4,6 @@ import mongoose, { ConnectOptions } from "mongoose";
 import { toNumberOrDashToNull } from "./utils/dataUtils.js";
 import Daten from "./db/models/Daten.js";
 
-// function toNumberOrDashToNull(value: string): number | null {
-//   //  return Number(value) ? Number(value) : null;
-//   return value === "-" ? null : Number(value);
-// }
-
 type MongooseConnectionOptions = ConnectOptions & {
   useNewUrlParser: boolean;
   useUnifiedTopology: boolean;
@@ -63,7 +58,7 @@ const MONGODB_URI = process.env.MONGODB_URI; // || ''
 
 const API_KEY_AV = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=OVERVIEW&symbol=`;
-const fetchIntervall = 3 * 1000; // 15 seconds
+const fetchIntervall = 13 * 1000; // 15 seconds
 
 if (!MONGODB_URI) {
   throw new Error("MONGODB_URI environment variable not found.");
