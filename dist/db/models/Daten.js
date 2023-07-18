@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-// const { Schema } = mongoose;
-const { Schema, connection } = mongoose;
+const { Schema } = mongoose;
+// const { Schema, connection } = mongoose;
 // Custom SchemaType, accepts number or null
 // and returns number or null
 const NumberOrNull = {
