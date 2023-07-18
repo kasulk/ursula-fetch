@@ -8,17 +8,24 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 import "dotenv/config";
+// import "dotenv";
+// import * as dotenv from "dotenv";
 import fetch from "node-fetch";
 // import fetch from "../node_modules/node-fetch/@types/index";
 import mongoose from "mongoose";
 // import { toNumberOrDashToNull } from "./utils/dataUtils.js";
 // import Daten from "./db/models/Daten";
 import Daten from "./db/models/Daten.js";
+// import path from "path";
+// const envPath = path.resolve(__dirname, '../.env');
+// dotenv.config({ path: envPath });
 function toNumberOrDashToNull(value) {
     //  return Number(value) ? Number(value) : null;
     return value === "-" ? null : Number(value);
 }
-const MONGODB_URI = process.env.MONGODB_URI || "";
+// const MONGODB_URI = process.env.MONGODB_URI || "";
+const MONGODB_URI = process.env.MONGODB_URI;
+console.log("mongoUri", MONGODB_URI);
 const API_KEY_AV = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=OVERVIEW&symbol=`;
 const fetchIntervall = 3 * 1000; // 15 seconds
