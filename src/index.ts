@@ -4,56 +4,6 @@ import mongoose, { ConnectOptions } from "mongoose";
 import { toNumberOrDashToNull } from "./utils/dataHelpers.js";
 import Daten from "./db/models/Daten.js";
 
-type MongooseConnectionOptions = ConnectOptions & {
-  useNewUrlParser: boolean;
-  useUnifiedTopology: boolean;
-};
-
-type ApiResponse = {
-  Address: string;
-  AnalystTargetPrice: string;
-  AssetType: string;
-  Beta: string;
-  BookValue: string;
-  CIK: string;
-  Currency: string;
-  Country: string;
-  Description: string;
-  DilutedEPSTTM: string;
-  DividendDate: string;
-  DividendPerShare: string;
-  DividendYield: string;
-  EBITDA: string;
-  EPS: string;
-  EVToEBITDA: string;
-  EVToRevenue: string;
-  Exchange: string;
-  ExDividendDate: string;
-  FiscalYearEnd: string;
-  ForwardPE: string;
-  GrossProfitTTM: string;
-  Industry: string;
-  LatestQuarter: string;
-  MarketCapitalization: string;
-  Name: string;
-  OperatingMarginTTM: string;
-  PEGRatio: string;
-  PERatio: string;
-  PriceToBookRatio: string;
-  // PriceToBookRatio: string
-  PriceToSalesRatioTTM: string;
-  ProfitMargin: string;
-  QuarterlyEarningsGrowthYOY: string;
-  QuarterlyRevenueGrowthYOY: string;
-  ReturnOnAssetsTTM: string;
-  ReturnOnEquityTTM: string;
-  RevenuePerShareTTM: string;
-  RevenueTTM: string;
-  Sector: string;
-  SharesOutstanding: string;
-  TrailingPE: string;
-};
-
 const MONGODB_URI = process.env.MONGODB_URI; // || ''
 
 const API_KEY_AV = process.env.API_KEY_AV;
@@ -106,7 +56,7 @@ async function abfrageUndSpeichern() {
         assetType: data.AssetType, // e.g. "Common Stock"
         beta: toNumberOrDashToNull(data.Beta),
         bookValue: toNumberOrDashToNull(data.BookValue),
-        cik: toNumberOrDashToNull(data.CIK), // ?
+        cik: toNumberOrDashToNull(data.CIK), // central index key; unique identifier assigned by the SEC
         currency: data.Currency, // e.g. "USD"
         country: data.Country, // e.g. "USA"
         description: data.Description,

@@ -1,17 +1,7 @@
 [
-  {
-    "ticker": "TSLA"
-  },
-  {
-    "ticker": "PETS"
-  },
-  {
-    "ticker": "AAPL"
-  },
-  {
-    "ticker": "MCD"
-  },
-  {
-    "ticker": "IIPR"
-  }
+  { "ticker": "TSLA" },
+  { "ticker": "PETS" },
+  { "ticker": "AAPL" },
+  { "ticker": "MCD" },
+  { "ticker": "IIPR" }
 ]

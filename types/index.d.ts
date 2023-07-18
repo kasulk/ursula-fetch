@@ -1,0 +1,48 @@
+type MongooseConnectionOptions = ConnectOptions & {
+  useNewUrlParser: boolean;
+  useUnifiedTopology: boolean;
+};
+
+type ApiResponse = {
+  Address: string;
+  AnalystTargetPrice: string;
+  AssetType: string;
+  Beta: string;
+  BookValue: string;
+  CIK: string;
+  Currency: string;
+  Country: string;
+  Description: string;
+  DilutedEPSTTM: string;
+  DividendDate: string;
+  DividendPerShare: string;
+  DividendYield: string;
+  EBITDA: string;
+  EPS: string;
+  EVToEBITDA: string;
+  EVToRevenue: string;
+  Exchange: string;
+  ExDividendDate: string;
+  FiscalYearEnd: string;
+  ForwardPE: string;
+  GrossProfitTTM: string;
+  Industry: string;
+  LatestQuarter: string;
+  MarketCapitalization: string;
+  Name: string;
+  OperatingMarginTTM: string;
+  PEGRatio: string;
+  PERatio: string;
+  PriceToBookRatio: string;
+  PriceToSalesRatioTTM: string;
+  ProfitMargin: string;
+  QuarterlyEarningsGrowthYOY: string;
+  QuarterlyRevenueGrowthYOY: string;
+  ReturnOnAssetsTTM: string;
+  ReturnOnEquityTTM: string;
+  RevenuePerShareTTM: string;
+  RevenueTTM: string;
+  Sector: string;
+  SharesOutstanding: string;
+  TrailingPE: string;
+};
