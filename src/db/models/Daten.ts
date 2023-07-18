@@ -18,7 +18,10 @@ const NumberOrNull = {
   type: Number,
   // todo: 0 is turned to null... e.g. MCD@returnOnEquityTTM
   // set: (value) => (value ? value : null), //! turns 0 to null...
-  set: (value: number | null) => (Number(value) ? Number(value) : null),
+  // set: (value: number | null) => (Number(value) ? Number(value) : null),
+  set: (value: number | null) =>
+    // !isNaN(parseFloat(value)) ? parseFloat(value) : null,
+    typeof value === "number" ? value : null,
 };
 
 // Mongoose-Modell für die zu speichernden Daten definieren
