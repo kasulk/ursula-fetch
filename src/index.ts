@@ -66,7 +66,10 @@ async function abfrageUndSpeichern() {
         dividendYield: toNumberOrDashToNull(data.DividendYield), // e.g. "0.0852"
         ebitda: toNumberOrDashToNull(data.EBITDA),
         eps: toNumberOrDashToNull(data.EPS),
-        //! eps15x: (toNumberOrDashToNull(data.EPS) * 15).toFixed(2),
+        eps15x:
+          toNumberOrDashToNull(data.EPS) === null
+            ? null
+            : Number(data.EPS) * 15,
         evToEBITDA: toNumberOrDashToNull(data.EVToEBITDA), // Enterprise Value to EBITDA (EV/EBITDA)
         evToRevenue: toNumberOrDashToNull(data.EVToRevenue), // Enterprise Value to Revenue (EV/R)
         exchange: data.Exchange, // e.g. "NASDAQ"
