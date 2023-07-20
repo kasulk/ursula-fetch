@@ -1,3 +1,5 @@
+type NumberOrNull = number | null;
+
 type MongooseConnectionOptions = ConnectOptions & {
   useNewUrlParser: boolean;
   useUnifiedTopology: boolean;
@@ -45,4 +47,49 @@ type ApiResponse = {
   Sector: string;
   SharesOutstanding: string;
   TrailingPE: string;
+};
+
+type ProcessedApiResponse = {
+  address: string;
+  analystTargetPrice: NumberOrNull;
+  assetType: string;
+  beta: NumberOrNull;
+  bookValue: NumberOrNull;
+  cik: string;
+  currency: string;
+  country: string;
+  description: string;
+  dilutedEPSTTM: NumberOrNull;
+  dividendDate: string;
+  dividendPerShare: NumberOrNull;
+  dividendYield: NumberOrNull;
+  ebitda: NumberOrNull;
+  eps: NumberOrNull;
+  eps15x: NumberOrNull;
+  evToEBITDA: NumberOrNull;
+  evToRevenue: NumberOrNull;
+  exchange: string;
+  exDividendDate: string;
+  fiscalYearEnd: string;
+  forwardPE: NumberOrNull;
+  grossProfitTTM: NumberOrNull;
+  industry: string;
+  latestQuarter: string;
+  marketCapitalization: NumberOrNull;
+  name: string;
+  operatingMarginTTM: NumberOrNull;
+  pegRatio: NumberOrNull;
+  peRatio: NumberOrNull;
+  priceToBookRatio: NumberOrNull;
+  priceToSalesRatioTTM: NumberOrNull;
+  profitMargin: NumberOrNull;
+  quarterlyEarningsGrowthYOY: NumberOrNull;
+  quarterlyRevenueGrowthYOY: NumberOrNull;
+  returnOnAssetsTTM: NumberOrNull;
+  returnOnEquityTTM: NumberOrNull;
+  revenuePerShareTTM: NumberOrNull;
+  revenueTTM: NumberOrNull;
+  sector: string;
+  sharesOutstanding: NumberOrNull;
+  trailingPE: NumberOrNull;
 };

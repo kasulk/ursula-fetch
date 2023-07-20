@@ -10,7 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import "dotenv/config";
 import fetch from "node-fetch";
 import mongoose from "mongoose";
-import { toNumberOrDashToNull } from "./utils/dataHelpers.js";
+import { processApiResponse } from "./utils/dataHelpers.js";
 import Daten from "./db/models/Daten.js";
 const MONGODB_URI = process.env.MONGODB_URI; // || ''
 const API_KEY_AV = process.env.API_KEY_AV;
@@ -45,57 +45,65 @@ function abfrageUndSpeichern() {
                 console.log(`--> Fetche AlphaVantage Overview-Daten fuer ${aeltesterDatensatz.ticker}`);
                 const response = yield fetch(singleApiLink);
                 const data = (yield response.json());
+                // Format data
+                const processedData = processApiResponse(data);
                 // Daten speichern
                 //! if the data from the API is the same as in the db, data won't be updated (incl. the timestamp!)
-                aeltesterDatensatz.set({
-                    // Felder entsprechend der API-Antwort setzen
-                    // Beispiel: name: data.name,
-                    // ...
-                    address: data.Address,
-                    analystTargetPrice: toNumberOrDashToNull(data.AnalystTargetPrice),
-                    assetType: data.AssetType,
-                    beta: toNumberOrDashToNull(data.Beta),
-                    bookValue: toNumberOrDashToNull(data.BookValue),
-                    cik: toNumberOrDashToNull(data.CIK),
-                    currency: data.Currency,
-                    country: data.Country,
-                    description: data.Description,
-                    dilutedEPSTTM: toNumberOrDashToNull(data.DilutedEPSTTM),
-                    dividendDate: data.DividendDate,
-                    dividendPerShare: toNumberOrDashToNull(data.DividendPerShare),
-                    dividendYield: toNumberOrDashToNull(data.DividendYield),
-                    ebitda: toNumberOrDashToNull(data.EBITDA),
-                    eps: toNumberOrDashToNull(data.EPS),
-                    eps15x: toNumberOrDashToNull(data.EPS) === null
-                        ? null
-                        : Number(data.EPS) * 15,
-                    evToEBITDA: toNumberOrDashToNull(data.EVToEBITDA),
-                    evToRevenue: toNumberOrDashToNull(data.EVToRevenue),
-                    exchange: data.Exchange,
-                    exDividendDate: data.ExDividendDate,
-                    fiscalYearEnd: data.FiscalYearEnd,
-                    forwardPE: toNumberOrDashToNull(data.ForwardPE),
-                    grossProfitTTM: toNumberOrDashToNull(data.GrossProfitTTM),
-                    industry: data.Industry,
-                    latestQuarter: data.LatestQuarter,
-                    marketCapitalization: toNumberOrDashToNull(data.MarketCapitalization),
-                    name: data.Name,
-                    operatingMarginTTM: toNumberOrDashToNull(data.OperatingMarginTTM),
-                    pegRatio: toNumberOrDashToNull(data.PEGRatio),
-                    peRatio: toNumberOrDashToNull(data.PERatio),
-                    priceToBookRatio: toNumberOrDashToNull(data.PriceToBookRatio),
-                    priceToSalesRatioTTM: toNumberOrDashToNull(data.PriceToSalesRatioTTM),
-                    profitMargin: toNumberOrDashToNull(data.ProfitMargin),
-                    quarterlyEarningsGrowthYOY: toNumberOrDashToNull(data.QuarterlyEarningsGrowthYOY),
-                    quarterlyRevenueGrowthYOY: toNumberOrDashToNull(data.QuarterlyRevenueGrowthYOY),
-                    returnOnAssetsTTM: toNumberOrDashToNull(data.ReturnOnAssetsTTM),
-                    returnOnEquityTTM: toNumberOrDashToNull(data.ReturnOnEquityTTM),
-                    revenuePerShareTTM: toNumberOrDashToNull(data.RevenuePerShareTTM),
-                    revenueTTM: toNumberOrDashToNull(data.RevenueTTM),
-                    sector: data.Sector,
-                    sharesOutstanding: toNumberOrDashToNull(data.SharesOutstanding),
-                    trailingPE: toNumberOrDashToNull(data.TrailingPE), // e.g. "1372"
-                });
+                aeltesterDatensatz.set(Object.assign({}, processedData));
+                // aeltesterDatensatz.set({
+                //   // Felder entsprechend der API-Antwort setzen
+                //   // Beispiel: name: data.name,
+                //   // ...
+                //   address: data.Address,
+                //   analystTargetPrice: toNumberOrDashToNull(data.AnalystTargetPrice),
+                //   assetType: data.AssetType, // e.g. "Common Stock"
+                //   beta: toNumberOrDashToNull(data.Beta),
+                //   bookValue: toNumberOrDashToNull(data.BookValue),
+                //   cik: toNumberOrDashToNull(data.CIK), // central index key; unique identifier assigned by the SEC
+                //   currency: data.Currency, // e.g. "USD"
+                //   country: data.Country, // e.g. "USA"
+                //   description: data.Description,
+                //   dilutedEPSTTM: toNumberOrDashToNull(data.DilutedEPSTTM),
+                //   dividendDate: data.DividendDate, // e.g. "2023-06-12"
+                //   dividendPerShare: toNumberOrDashToNull(data.DividendPerShare), // e.g. "1.2"
+                //   dividendYield: toNumberOrDashToNull(data.DividendYield), // e.g. "0.0852"
+                //   ebitda: toNumberOrDashToNull(data.EBITDA),
+                //   eps: toNumberOrDashToNull(data.EPS),
+                //   eps15x:
+                //     toNumberOrDashToNull(data.EPS) === null
+                //       ? null
+                //       : Number(data.EPS) * 15,
+                //   evToEBITDA: toNumberOrDashToNull(data.EVToEBITDA), // Enterprise Value to EBITDA (EV/EBITDA)
+                //   evToRevenue: toNumberOrDashToNull(data.EVToRevenue), // Enterprise Value to Revenue (EV/R)
+                //   exchange: data.Exchange, // e.g. "NASDAQ"
+                //   exDividendDate: data.ExDividendDate, // e.g. "2023-06-05"
+                //   fiscalYearEnd: data.FiscalYearEnd, // e.g. "March"
+                //   forwardPE: toNumberOrDashToNull(data.ForwardPE),
+                //   grossProfitTTM: toNumberOrDashToNull(data.GrossProfitTTM),
+                //   industry: data.Industry, // e.g. "RETAIL-DRUG STORES AND PROPRIETARY STORES"
+                //   latestQuarter: data.LatestQuarter, // e.g. "2023-03-31"
+                //   marketCapitalization: toNumberOrDashToNull(data.MarketCapitalization), // e.g. "290498000"
+                //   name: data.Name, // e.g. "PetMed Express Inc"
+                //   operatingMarginTTM: toNumberOrDashToNull(data.OperatingMarginTTM),
+                //   pegRatio: toNumberOrDashToNull(data.PEGRatio), // e.g. "2.58"
+                //   peRatio: toNumberOrDashToNull(data.PERatio), // e.g. "1372"
+                //   priceToBookRatio: toNumberOrDashToNull(data.PriceToBookRatio),
+                //   priceToSalesRatioTTM: toNumberOrDashToNull(data.PriceToSalesRatioTTM),
+                //   profitMargin: toNumberOrDashToNull(data.ProfitMargin), // e.g. "0.0009"
+                //   quarterlyEarningsGrowthYOY: toNumberOrDashToNull(
+                //     data.QuarterlyEarningsGrowthYOY
+                //   ), // e.g. "-0.589"
+                //   quarterlyRevenueGrowthYOY: toNumberOrDashToNull(
+                //     data.QuarterlyRevenueGrowthYOY
+                //   ), // e.g. "-0.054"
+                //   returnOnAssetsTTM: toNumberOrDashToNull(data.ReturnOnAssetsTTM), // e.g. "0.0031"
+                //   returnOnEquityTTM: toNumberOrDashToNull(data.ReturnOnEquityTTM), // e.g. "0.0017"
+                //   revenuePerShareTTM: toNumberOrDashToNull(data.RevenuePerShareTTM),
+                //   revenueTTM: toNumberOrDashToNull(data.RevenueTTM), // e.g. "256858000"
+                //   sector: data.Sector, // e.g. "TRADE & SERVICES"
+                //   sharesOutstanding: toNumberOrDashToNull(data.SharesOutstanding), // e.g. "21173300"
+                //   trailingPE: toNumberOrDashToNull(data.TrailingPE), // e.g. "1372"
+                // });
                 yield aeltesterDatensatz.save();
                 console.log(`Datensatz fuer ${aeltesterDatensatz.ticker} erfolgreich aktualisiert und gespeichert!`);
             }
