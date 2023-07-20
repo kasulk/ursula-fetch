@@ -1,13 +1,9 @@
-// import Daten from "../db/models/Daten";
-
-// export function toNumberOrDashToNull(value: string): number | null {
 export function toNumberOrDashToNull(value: string): NumberOrNull {
   const parsedValue = parseFloat(value);
   return !isNaN(parsedValue) ? parsedValue : null;
 }
 
 export function processApiResponse(data: ApiResponse): ProcessedApiResponse {
-  // export function processData(data: ApiResponse): ApiResponse
   return {
     address: data.Address,
     analystTargetPrice: toNumberOrDashToNull(data.AnalystTargetPrice),
