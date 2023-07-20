@@ -47,6 +47,8 @@ type ApiResponse = {
   Sector: string;
   SharesOutstanding: string;
   TrailingPE: string;
+  //
+  Note?: string; // AlphaVantage error message if request is bad
 };
 
 type ProcessedApiResponse = {
