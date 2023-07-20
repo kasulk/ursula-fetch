@@ -29,17 +29,17 @@ mongoose
   });
 const db = mongoose.connection;
 
-// Funktion, um die API-Abfrage durchzuführen und die Daten zu speichern
-async function abfrageUndSpeichern() {
+// Conduct API request and save data in db
+async function requestAndSaveToDatabase() {
   try {
-    // Ältesten Datensatz in der Datenbank finden
-    const aeltesterDatensatz = await Daten.findOne().sort("updatedAt");
-    const singleApiLink = apiLink + aeltesterDatensatz.ticker;
+    // Find oldest dataset in the db
+    const oldestDataset = await Daten.findOne().sort("updatedAt");
+    const singleApiLink = apiLink + oldestDataset.ticker;
 
-    if (aeltesterDatensatz) {
-      // API-Abfrage durchführen (mit node-fetch)
+    if (oldestDataset) {
+      // Conduct API request (with node-fetc)
       console.log(
-        `--> Fetche AlphaVantage Overview-Daten fuer ${aeltesterDatensatz.ticker}`
+        `--> Fetche AlphaVantage Overview-Daten fuer ${oldestDataset.ticker}`
       );
       const response = await fetch(singleApiLink);
       const data = (await response.json()) as ApiResponse;
@@ -49,17 +49,17 @@ async function abfrageUndSpeichern() {
 
       // Save data
       //! if the data from the API is the same as in the db, data won't be updated (incl. the timestamp!)
-      aeltesterDatensatz.set({
+      oldestDataset.set({
         ...processedData,
       });
-      await aeltesterDatensatz.save();
+      await oldestDataset.save();
 
       console.log(
-        `Datensatz fuer ${aeltesterDatensatz.ticker} erfolgreich aktualisiert und gespeichert!`
+        `Datensatz fuer ${oldestDataset.ticker} erfolgreich aktualisiert und gespeichert!`
       );
     } else {
       console.log(
-        `Keine Daten fuer ${aeltesterDatensatz.ticker} in der Datenbank vorhanden.`
+        `Keine Daten fuer ${oldestDataset.ticker} in der Datenbank vorhanden.`
       );
     }
     console.log(
@@ -70,14 +70,14 @@ async function abfrageUndSpeichern() {
   }
 }
 
-// Funktion, um die API-Abfrage in einem Intervall auszuführen
-function startAbfrageIntervall() {
+// Conduct API request in interval
+function startRequestInterval() {
   // Conduct initial API-request
-  abfrageUndSpeichern();
+  requestAndSaveToDatabase();
 
   // Start request interval every x seconds
   setInterval(() => {
-    abfrageUndSpeichern();
+    requestAndSaveToDatabase();
     // }, 15000);
   }, fetchInterval);
 }
@@ -89,5 +89,5 @@ db.on(
 );
 db.once("open", () => {
   console.log("Verbunden mit Datenbank...");
-  startAbfrageIntervall();
+  startRequestInterval();
 });

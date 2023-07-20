@@ -33,28 +33,28 @@ mongoose
     console.error("MongoDB connection error:", error);
 });
 const db = mongoose.connection;
-// Funktion, um die API-Abfrage durchzuführen und die Daten zu speichern
-function abfrageUndSpeichern() {
+// Conduct API request and save data in db
+function requestAndSaveToDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            // Ältesten Datensatz in der Datenbank finden
-            const aeltesterDatensatz = yield Daten.findOne().sort("updatedAt");
-            const singleApiLink = apiLink + aeltesterDatensatz.ticker;
-            if (aeltesterDatensatz) {
-                // API-Abfrage durchführen (mit node-fetch)
-                console.log(`--> Fetche AlphaVantage Overview-Daten fuer ${aeltesterDatensatz.ticker}`);
+            // Find oldest dataset in the db
+            const oldestDataset = yield Daten.findOne().sort("updatedAt");
+            const singleApiLink = apiLink + oldestDataset.ticker;
+            if (oldestDataset) {
+                // Conduct API request (with node-fetc)
+                console.log(`--> Fetche AlphaVantage Overview-Daten fuer ${oldestDataset.ticker}`);
                 const response = yield fetch(singleApiLink);
                 const data = (yield response.json());
                 // Format data
                 const processedData = processApiResponse(data);
                 // Save data
                 //! if the data from the API is the same as in the db, data won't be updated (incl. the timestamp!)
-                aeltesterDatensatz.set(Object.assign({}, processedData));
-                yield aeltesterDatensatz.save();
-                console.log(`Datensatz fuer ${aeltesterDatensatz.ticker} erfolgreich aktualisiert und gespeichert!`);
+                oldestDataset.set(Object.assign({}, processedData));
+                yield oldestDataset.save();
+                console.log(`Datensatz fuer ${oldestDataset.ticker} erfolgreich aktualisiert und gespeichert!`);
             }
             else {
-                console.log(`Keine Daten fuer ${aeltesterDatensatz.ticker} in der Datenbank vorhanden.`);
+                console.log(`Keine Daten fuer ${oldestDataset.ticker} in der Datenbank vorhanden.`);
             }
             console.log(`Warte ${fetchInterval / 1000} Sekunden bis zum naechsten fetch...`);
         }
@@ -63,13 +63,13 @@ function abfrageUndSpeichern() {
         }
     });
 }
-// Funktion, um die API-Abfrage in einem Intervall auszuführen
-function startAbfrageIntervall() {
+// Conduct API request in interval
+function startRequestInterval() {
     // Conduct initial API-request
-    abfrageUndSpeichern();
+    requestAndSaveToDatabase();
     // Start request interval every x seconds
     setInterval(() => {
-        abfrageUndSpeichern();
+        requestAndSaveToDatabase();
         // }, 15000);
     }, fetchInterval);
 }
@@ -77,5 +77,5 @@ function startAbfrageIntervall() {
 db.on("error", console.error.bind(console, "Fehler beim Verbinden mit der Datenbank:"));
 db.once("open", () => {
     console.log("Verbunden mit Datenbank...");
-    startAbfrageIntervall();
+    startRequestInterval();
 });
