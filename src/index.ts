@@ -9,7 +9,6 @@ const MONGODB_URI = process.env.MONGODB_URI; // || ''
 const dataProvider = "AlphaVantage";
 const dataFunction = "OVERVIEW";
 const API_KEY_AV = process.env.API_KEY_AV;
-// const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=OVERVIEW&symbol=`;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=${dataFunction}&symbol=`;
 const fetchInterval = 10 * 1000; // 15 seconds
 
@@ -26,11 +25,9 @@ const mongooseConnectionOptions: MongooseConnectionOptions = {
 mongoose
   .connect(MONGODB_URI, mongooseConnectionOptions)
   .then(() => {
-    // console.log("MongoDB connected successfully!");
     console.log(logMessages.dbConnect.success);
   })
   .catch((error) => {
-    // console.error("MongoDB connection error:", error);
     console.error(logMessages.dbConnect.catchError, error);
   });
 const db = mongoose.connection;
@@ -45,8 +42,6 @@ async function requestAndSaveToDatabase() {
     if (oldestDataset) {
       // Conduct API request (with node-fetc)
       console.log(
-        // `--> Fetche AlphaVantage Overview-Daten fuer ${oldestDataset.ticker}`
-        // `${logMessages.fetch} ${dataProvider} ${dataFunction}-Data for: ${oldestDataset.ticker}`
         logMessages.fetching(dataProvider, dataFunction, oldestDataset.ticker)
       );
       const response = await fetch(singleApiLink);
@@ -62,22 +57,12 @@ async function requestAndSaveToDatabase() {
       });
       await oldestDataset.save();
 
-      console.log(
-        // `Datensatz fuer ${oldestDataset.ticker} erfolgreich aktualisiert und gespeichert!`
-        `${logMessages.dbUpdate.success} ${oldestDataset.ticker}!`
-      );
+      console.log(`${logMessages.dbUpdate.success} ${oldestDataset.ticker}!`);
     } else {
-      console.log(
-        // `Keine Daten fuer ${oldestDataset.ticker} in der Datenbank vorhanden.`
-        `${logMessages.dbUpdate.elseError} ${oldestDataset.ticker}!`
-      );
+      console.log(`${logMessages.dbUpdate.elseError} ${oldestDataset.ticker}!`);
     }
-    console.log(
-      // `Warte ${fetchInterval / 1000} Sekunden bis zum naechsten fetch...`
-      `${logMessages.fetchInterval(fetchInterval)}`
-    );
+    console.log(`${logMessages.fetchInterval(fetchInterval)}`);
   } catch (error) {
-    // console.error("Fehler beim Aktualisieren und Speichern der Daten:", error);
     console.error(logMessages.dbRequest.catchError, error);
   }
 }
@@ -90,18 +75,12 @@ function startRequestInterval() {
   // Start request interval every x seconds
   setInterval(() => {
     requestAndSaveToDatabase();
-    // }, 15000);
   }, fetchInterval);
 }
 
 // Connect to db and start request interval
-db.on(
-  "error",
-  // console.error.bind(console, "Fehler beim Verbinden mit der Datenbank:")
-  console.error.bind(console, logMessages.dbConnect.error)
-);
+db.on("error", console.error.bind(console, logMessages.dbConnect.error));
 db.once("open", () => {
-  // console.log("Verbunden mit Datenbank...");
   console.log(logMessages.dbConnect.success);
 
   startRequestInterval();
