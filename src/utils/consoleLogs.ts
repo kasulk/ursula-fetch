@@ -29,6 +29,16 @@ const logMessages = {
   dbRequest: {
     catchError: "Error while fetching, updating and saving the requested data!",
   },
+  requestLimit: {
+    limitReached: function (
+      dailyLimit: number,
+      dataProvider: string,
+      dataFunction: string
+    ) {
+      return `\nDaily limit of ${dailyLimit} possible requests per day for ${dataFunction.toLocaleUpperCase()} at ${dataProvider} reached.`;
+    },
+    stopScript: `Stopping script...\n`,
+  },
 };
 
 export default logMessages;
