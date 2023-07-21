@@ -3,7 +3,9 @@ export function toNumberOrDashToNull(value: string): NumberOrNull {
   return !isNaN(parsedValue) ? parsedValue : null;
 }
 
-export function processApiResponse(data: ApiResponse): ProcessedApiResponse {
+export function processApiResponseOverview(
+  data: ApiResponseOverview
+): ProcessedApiResponseOverview {
   return {
     address: data.Address,
     analystTargetPrice: toNumberOrDashToNull(data.AnalystTargetPrice),

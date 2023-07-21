@@ -2,7 +2,7 @@ export function toNumberOrDashToNull(value) {
     const parsedValue = parseFloat(value);
     return !isNaN(parsedValue) ? parsedValue : null;
 }
-export function processApiResponse(data) {
+export function processApiResponseOverview(data) {
     return {
         address: data.Address,
         analystTargetPrice: toNumberOrDashToNull(data.AnalystTargetPrice),

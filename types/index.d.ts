@@ -5,7 +5,7 @@ type MongooseConnectionOptions = ConnectOptions & {
   useUnifiedTopology: boolean;
 };
 
-type ApiResponse = {
+type ApiResponseOverview = {
   Address: string;
   AnalystTargetPrice: string;
   AssetType: string;
@@ -51,7 +51,7 @@ type ApiResponse = {
   Note?: string; // AlphaVantage error message if request is bad
 };
 
-type ProcessedApiResponse = {
+type ProcessedApiResponseOverview = {
   address: string;
   analystTargetPrice: NumberOrNull;
   assetType: string;

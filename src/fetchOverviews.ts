@@ -1,15 +1,15 @@
 import "dotenv/config";
 import fetch from "node-fetch";
 import mongoose from "mongoose";
-import { processApiResponse } from "./utils/dataHelpers.js";
-import Daten from "./db/models/Daten.js";
+import { processApiResponseOverview } from "./utils/dataHelpers.js";
+import Overview from "./db/models/Overview.js";
 import logMessages from "./utils/consoleLogs.js";
 
 const MONGODB_URI = process.env.MONGODB_URI; // || ''
 const dataProvider = "AlphaVantage";
 const dataFunction = "OVERVIEW";
-const API_KEY_AV = process.env.API_KEY_AV;
-const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=${dataFunction}&symbol=`;
+const API_KEY = process.env.API_KEY_AV;
+const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY}&function=${dataFunction}&symbol=`;
 const fetchInterval = 3 * 1000; // 15 seconds
 
 if (!MONGODB_URI) {
@@ -36,7 +36,7 @@ const db = mongoose.connection;
 async function requestAndSaveToDatabase() {
   try {
     // Find oldest dataset in the db
-    const oldestDataset = await Daten.findOne().sort("updatedAt");
+    const oldestDataset = await Overview.findOne().sort("updatedAt");
     const singleApiLink = apiLink + oldestDataset.ticker;
 
     if (oldestDataset) {
@@ -45,10 +45,10 @@ async function requestAndSaveToDatabase() {
         logMessages.fetching(dataProvider, dataFunction, oldestDataset.ticker)
       );
       const response = await fetch(singleApiLink);
-      const data = (await response.json()) as ApiResponse;
+      const data = (await response.json()) as ApiResponseOverview;
 
       // Format data
-      const processedData = processApiResponse(data);
+      const processedData = processApiResponseOverview(data);
 
       // If data is bad show error, and don't save to db
       if (!processedData.name) {
