@@ -1,7 +1,7 @@
 import "dotenv/config";
 import fetch from "node-fetch";
 import mongoose from "mongoose";
-import { processApiResponse } from "./utils/dataHelpers.js";
+import { processApiResponseQuotes } from "./utils/dataHelpers.js";
 import Quote from "./db/models/Quote.js";
 import logMessages from "./utils/consoleLogs.js";
 
@@ -9,7 +9,6 @@ const MONGODB_URI = process.env.MONGODB_URI; // || ''
 const dataProvider = "TwelveData";
 const dataFunction = "QUOTE";
 const API_KEY = process.env.API_KEY_TD;
-// const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY}&function=${dataFunction}&symbol=`;
 const apiLink = `https://api.twelvedata.com/${dataFunction}?apikey=${API_KEY}&symbol=`;
 const fetchInterval = 3 * 1000; // 15 seconds
 
@@ -49,7 +48,7 @@ async function requestAndSaveToDatabase() {
       const data = (await response.json()) as ApiResponseQuotes;
 
       // Format data
-      const processedData = processApiResponse(data);
+      const processedData = processApiResponseQuotes(data);
 
       // If data is bad show error, and don't save to db
       if (!processedData.name) {
