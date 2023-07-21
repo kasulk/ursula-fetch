@@ -6,10 +6,11 @@ import Daten from "./db/models/Daten.js";
 import logMessages from "./utils/consoleLogs.js";
 
 const MONGODB_URI = process.env.MONGODB_URI; // || ''
-const dataProvider = "AlphaVantage";
-const dataFunction = "OVERVIEW";
-const API_KEY_AV = process.env.API_KEY_AV;
-const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=${dataFunction}&symbol=`;
+const dataProvider = "TwelveData";
+const dataFunction = "QUOTE";
+const API_KEY = process.env.API_KEY_TD;
+// const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY}&function=${dataFunction}&symbol=`;
+const apiLink = `https://api.twelvedata.com/${dataFunction}?apikey=${API_KEY}&symbol=`;
 const fetchInterval = 3 * 1000; // 15 seconds
 
 if (!MONGODB_URI) {
@@ -36,7 +37,7 @@ const db = mongoose.connection;
 async function requestAndSaveToDatabase() {
   try {
     // Find oldest dataset in the db
-    const oldestDataset = await Daten.findOne().sort("updatedAt");
+    const oldestDataset = await Quote.findOne().sort("updatedAt");
     const singleApiLink = apiLink + oldestDataset.ticker;
 
     if (oldestDataset) {
@@ -45,7 +46,7 @@ async function requestAndSaveToDatabase() {
         logMessages.fetching(dataProvider, dataFunction, oldestDataset.ticker)
       );
       const response = await fetch(singleApiLink);
-      const data = (await response.json()) as ApiResponse;
+      const data = (await response.json()) as ApiResponseQuotes;
 
       // Format data
       const processedData = processApiResponse(data);
@@ -58,7 +59,8 @@ async function requestAndSaveToDatabase() {
             oldestDataset.ticker
           )
         );
-        console.log(data.Note, "\n");
+        // console.log(data.Note, "\n");
+        console.log(data, "\n");
 
         return;
       }

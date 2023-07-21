@@ -54,3 +54,38 @@ export function processApiResponse(data: ApiResponse): ProcessedApiResponse {
     trailingPE: toNumberOrDashToNull(data.TrailingPE), // e.g. "1372"
   };
 }
+
+export function processApiResponseQuotes(
+  data: ApiResponseQuotes
+): ProcessedApiResponseQuotes {
+  return {
+    // address: data.Address,
+    // analystTargetPrice: toNumberOrDashToNull(data.AnalystTargetPrice),
+    symbol: "PETS",
+    name: "PetMed Express Inc",
+    exchange: "NASDAQ",
+    mic_code: "XNGS",
+    currency: "USD",
+    datetime: "2023-07-20",
+    timestamp: 1689883199,
+    open: "14.10000",
+    high: "14.11000",
+    low: "13.71000",
+    close: "13.80000",
+    volume: "231200",
+    previous_close: "14.08000",
+    change: "-0.28000",
+    percent_change: "-1.98863",
+    average_volume: "388850",
+    is_market_open: false,
+    fifty_two_week: {
+      low: "12.92000",
+      high: "24.01000",
+      low_change: "0.88000",
+      high_change: "-10.21000",
+      low_change_percent: "6.81115",
+      high_change_percent: "-42.52395",
+      range: "12.920000 - 24.010000",
+    },
+  };
+}
