@@ -6,9 +6,8 @@ const { Schema } = mongoose;
 const quoteSchema = new Schema(
   {
     ticker: { type: mongoose.Schema.Types.ObjectId, ref: "Daten" },
-    quotes: Number,
-    //
     // symbol: "PETS",
+    // quotes: Number,
     name: String, // e.g. "PetMed Express Inc",
     exchange: String, // e.g. "NASDAQ",
     mic_code: String, // e.g. "XNGS",
@@ -35,6 +34,7 @@ const quoteSchema = new Schema(
       range: String, // e.g. "12.920000 - 24.010000",
     },
   },
+  // create timestamps for createdAt and updatedAt
   { timestamps: true }
 );
 
