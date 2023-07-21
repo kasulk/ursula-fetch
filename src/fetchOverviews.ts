@@ -10,7 +10,7 @@ const dataProvider = "AlphaVantage";
 const dataFunction = "OVERVIEW";
 const API_KEY = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY}&function=${dataFunction}&symbol=`;
-const fetchInterval = 3 * 1000; // 15 seconds
+const fetchInterval = 3 * 1000; // 13 seconds; ~5 per minute
 
 if (!MONGODB_URI) {
   throw new Error("MONGODB_URI environment variable not found.");

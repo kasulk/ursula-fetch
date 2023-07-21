@@ -13,7 +13,7 @@ const logMessages = {
             else: "ERROR! No data found in db for:",
             badResponse: function (length, ticker) {
                 return `XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-        \tBAD RESPONSE!! Data for [${ticker}] not updated in DB! Trying again in ${length / 1000} seconds...\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n`;
+        BAD RESPONSE!! Data for *** ${ticker} *** not updated in DB! Trying again in ${length / 1000} seconds...\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n`;
             },
         },
     },
