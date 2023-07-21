@@ -5,7 +5,8 @@ const { Schema } = mongoose;
 
 const quoteSchema = new Schema(
   {
-    ticker: { type: mongoose.Schema.Types.ObjectId, ref: "Daten" },
+    // ticker: { type: mongoose.Schema.Types.ObjectId, ref: "Daten" },
+    ticker: { type: String, required: true },
     // symbol: "PETS",
     // quotes: Number,
     name: String, // e.g. "PetMed Express Inc",

@@ -2,7 +2,7 @@ import "dotenv/config";
 import fetch from "node-fetch";
 import mongoose from "mongoose";
 import { processApiResponse } from "./utils/dataHelpers.js";
-import Daten from "./db/models/Daten.js";
+import Quote from "./db/models/Quote.js";
 import logMessages from "./utils/consoleLogs.js";
 
 const MONGODB_URI = process.env.MONGODB_URI; // || ''
