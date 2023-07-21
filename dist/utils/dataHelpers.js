@@ -58,7 +58,7 @@ export function processApiResponseQuotes(data) {
         mic_code: data.mic_code,
         currency: data.currency,
         datetime: data.datetime,
-        timestamp: toNumberOrDashToNull(data.timestamp),
+        timestamp: data.timestamp,
         open: toNumberOrDashToNull(data.open),
         high: toNumberOrDashToNull(data.high),
         low: toNumberOrDashToNull(data.low),

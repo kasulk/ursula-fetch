@@ -67,7 +67,7 @@ export function processApiResponseQuotes(
     mic_code: data.mic_code, // "XNGS",
     currency: data.currency, // "USD",
     datetime: data.datetime, // "2023-07-20",
-    timestamp: toNumberOrDashToNull(data.timestamp), // 1689883199,
+    timestamp: data.timestamp, // 1689883199,
     open: toNumberOrDashToNull(data.open), // "14.10000",
     high: toNumberOrDashToNull(data.high), // "14.11000",
     low: toNumberOrDashToNull(data.low), // "13.71000",
