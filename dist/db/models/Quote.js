@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { NumberOrNull } from "./_customSchemaTypes";
+import { NumberOrNull } from "./_customSchemaTypes.js";
 const { Schema } = mongoose;
 const quoteSchema = new Schema({
     // ticker: { type: mongoose.Schema.Types.ObjectId, ref: "Daten" },

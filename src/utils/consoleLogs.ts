@@ -9,7 +9,7 @@ const logMessages = {
     dataFunction: string,
     ticker: string
   ): string {
-    return `\n---> Fetching ${dataProvider} ${dataFunction}-Data for:\t ${ticker}`;
+    return `\n---> Fetching ${dataProvider} ${dataFunction.toUpperCase()}-Data for:\t ${ticker}`;
   },
   dbUpdate: {
     success: "SUCCESS! Dataset updated for:",

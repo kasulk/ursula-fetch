@@ -5,7 +5,7 @@ const logMessages = {
         catchError: "MongoDB connection (catch) error:",
     },
     fetching: function (dataProvider, dataFunction, ticker) {
-        return `\n---> Fetching ${dataProvider} ${dataFunction}-Data for:\t ${ticker}`;
+        return `\n---> Fetching ${dataProvider} ${dataFunction.toUpperCase()}-Data for:\t ${ticker}`;
     },
     dbUpdate: {
         success: "SUCCESS! Dataset updated for:",

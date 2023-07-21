@@ -15,7 +15,7 @@ import Quote from "./db/models/Quote.js";
 import logMessages from "./utils/consoleLogs.js";
 const MONGODB_URI = process.env.MONGODB_URI; // || ''
 const dataProvider = "TwelveData";
-const dataFunction = "QUOTE";
+const dataFunction = "quote"; // must be lowercase
 const API_KEY = process.env.API_KEY_TD;
 const apiLink = `https://api.twelvedata.com/${dataFunction}?apikey=${API_KEY}&symbol=`;
 const fetchInterval = 3 * 1000; // 15 seconds
