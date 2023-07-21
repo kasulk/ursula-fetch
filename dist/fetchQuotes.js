@@ -19,8 +19,7 @@ const dataFunction = "quote"; // must be lowercase
 const API_KEY = process.env.API_KEY_TD;
 const apiLink = `https://api.twelvedata.com/${dataFunction}?apikey=${API_KEY}&symbol=`;
 const fetchInterval = 8 * 1000; // 8 seconds; ~8 per minute
-// let requestCount = 0;
-let requestCount = 798;
+let requestCount = 0;
 const dailyRequestLimit = 800; // 1 quote request = 1 credit
 if (!MONGODB_URI) {
     throw new Error("MONGODB_URI environment variable not found.");
