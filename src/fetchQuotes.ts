@@ -58,7 +58,6 @@ async function requestAndSaveToDatabase() {
             oldestDataset.ticker
           )
         );
-        // console.log(data.Note, "\n");
         console.log(data, "\n");
 
         return;

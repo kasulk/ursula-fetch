@@ -53,7 +53,6 @@ function requestAndSaveToDatabase() {
                 // If data is bad show error, and don't save to db
                 if (!processedData.name) {
                     console.log(logMessages.dbUpdate.error.badResponse(fetchInterval, oldestDataset.ticker));
-                    // console.log(data.Note, "\n");
                     console.log(data, "\n");
                     return;
                 }
