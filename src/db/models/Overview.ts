@@ -1,17 +1,10 @@
 import mongoose from "mongoose";
+import { NumberOrNull } from "./_customSchemaTypes.js";
 
 const { Schema } = mongoose;
-// const { Schema, connection } = mongoose;
 
-// Custom SchemaType, accepts number or null
-// and returns number or null
-const NumberOrNull = {
-  type: Number,
-  set: (value: number | null) => (typeof value === "number" ? value : null),
-};
-
-// Mongoose-Modell für die zu speichernden Daten definieren
-const datenSchema = new Schema(
+// Mongoose-Modell für die zu speichernden Overview-Daten definieren
+const overviewSchema = new Schema(
   {
     // Symbol: { type: String, required: true },
     ticker: { type: String, required: true },
@@ -73,6 +66,7 @@ const datenSchema = new Schema(
 );
 
 // check whether the model with this name has already been compiled and if yes, take the already compiled model
-const Daten = mongoose.models.Daten || mongoose.model("Daten", datenSchema);
+const Overview =
+  mongoose.models.Overview || mongoose.model("Overview", overviewSchema);
 
-export default Daten;
+export default Overview;

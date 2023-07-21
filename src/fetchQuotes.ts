@@ -1,16 +1,18 @@
 import "dotenv/config";
 import fetch from "node-fetch";
-import mongoose, { ConnectOptions } from "mongoose";
-import { processApiResponse } from "./utils/dataHelpers.js";
-import Daten from "./db/models/Daten.js";
+import mongoose from "mongoose";
+import { processApiResponseQuotes } from "./utils/dataHelpers.js";
+import Quote from "./db/models/Quote.js";
 import logMessages from "./utils/consoleLogs.js";
 
 const MONGODB_URI = process.env.MONGODB_URI; // || ''
-const dataProvider = "AlphaVantage";
-const dataFunction = "OVERVIEW";
-const API_KEY_AV = process.env.API_KEY_AV;
-const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY_AV}&function=${dataFunction}&symbol=`;
-const fetchInterval = 3 * 1000; // 15 seconds
+const dataProvider = "TwelveData";
+const dataFunction = "quote"; // must be lowercase
+const API_KEY = process.env.API_KEY_TD;
+const apiLink = `https://api.twelvedata.com/${dataFunction}?apikey=${API_KEY}&symbol=`;
+const fetchInterval = 8 * 1000; // 8 seconds; ~8 per minute
+let requestCount = 0;
+const dailyRequestLimit = 800; // 1 quote request = 1 credit
 
 if (!MONGODB_URI) {
   throw new Error("MONGODB_URI environment variable not found.");
@@ -36,7 +38,7 @@ const db = mongoose.connection;
 async function requestAndSaveToDatabase() {
   try {
     // Find oldest dataset in the db
-    const oldestDataset = await Daten.findOne().sort("updatedAt");
+    const oldestDataset = await Quote.findOne().sort("updatedAt");
     const singleApiLink = apiLink + oldestDataset.ticker;
 
     if (oldestDataset) {
@@ -45,10 +47,11 @@ async function requestAndSaveToDatabase() {
         logMessages.fetching(dataProvider, dataFunction, oldestDataset.ticker)
       );
       const response = await fetch(singleApiLink);
-      const data = (await response.json()) as ApiResponse;
+      const data = (await response.json()) as ApiResponseQuotes;
+      requestCount++;
 
       // Format data
-      const processedData = processApiResponse(data);
+      const processedData = processApiResponseQuotes(data);
 
       // If data is bad show error, and don't save to db
       if (!processedData.name) {
@@ -58,7 +61,7 @@ async function requestAndSaveToDatabase() {
             oldestDataset.ticker
           )
         );
-        console.log(data.Note, "\n");
+        console.log(data, "\n");
 
         return;
       }
@@ -89,6 +92,18 @@ function startRequestInterval() {
 
   // Start request interval every x seconds
   setInterval(() => {
+    // stop script, if daily limit is reached
+    if (requestCount === dailyRequestLimit) {
+      console.log(
+        logMessages.requestLimit.limitReached(
+          dailyRequestLimit,
+          dataProvider,
+          dataFunction
+        )
+      );
+      console.log(logMessages.requestLimit.stopScript);
+      process.exit(0); // successful exit with exit-code 0
+    }
     requestAndSaveToDatabase();
   }, fetchInterval);
 }

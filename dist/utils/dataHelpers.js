@@ -2,7 +2,7 @@ export function toNumberOrDashToNull(value) {
     const parsedValue = parseFloat(value);
     return !isNaN(parsedValue) ? parsedValue : null;
 }
-export function processApiResponse(data) {
+export function processApiResponseOverview(data) {
     return {
         address: data.Address,
         analystTargetPrice: toNumberOrDashToNull(data.AnalystTargetPrice),
@@ -46,5 +46,37 @@ export function processApiResponse(data) {
         sector: data.Sector,
         sharesOutstanding: toNumberOrDashToNull(data.SharesOutstanding),
         trailingPE: toNumberOrDashToNull(data.TrailingPE), // e.g. "1372"
+    };
+}
+export function processApiResponseQuotes(data) {
+    return {
+        // address: data.Address,
+        // analystTargetPrice: toNumberOrDashToNull(data.AnalystTargetPrice),
+        // symbol: "PETS",
+        name: data.name,
+        exchange: data.exchange,
+        mic_code: data.mic_code,
+        currency: data.currency,
+        datetime: data.datetime,
+        timestamp: data.timestamp,
+        open: toNumberOrDashToNull(data.open),
+        high: toNumberOrDashToNull(data.high),
+        low: toNumberOrDashToNull(data.low),
+        close: toNumberOrDashToNull(data.close),
+        volume: toNumberOrDashToNull(data.volume),
+        previous_close: toNumberOrDashToNull(data.previous_close),
+        change: toNumberOrDashToNull(data.change),
+        percent_change: toNumberOrDashToNull(data.percent_change),
+        average_volume: toNumberOrDashToNull(data.average_volume),
+        is_market_open: data.is_market_open,
+        fifty_two_week: {
+            low: toNumberOrDashToNull(data.fifty_two_week.low),
+            high: toNumberOrDashToNull(data.fifty_two_week.high),
+            low_change: toNumberOrDashToNull(data.fifty_two_week.low_change),
+            high_change: toNumberOrDashToNull(data.fifty_two_week.high_change),
+            low_change_percent: toNumberOrDashToNull(data.fifty_two_week.low_change_percent),
+            high_change_percent: toNumberOrDashToNull(data.fifty_two_week.high_change_percent),
+            range: data.fifty_two_week.range, // "12.920000 - 24.010000",
+        },
     };
 }

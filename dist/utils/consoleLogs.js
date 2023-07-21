@@ -5,15 +5,15 @@ const logMessages = {
         catchError: "MongoDB connection (catch) error:",
     },
     fetching: function (dataProvider, dataFunction, ticker) {
-        return `\n---> Fetching ${dataProvider} ${dataFunction}-Data for:\t ${ticker}`;
+        return `\n---> Fetching ${dataProvider} ${dataFunction.toUpperCase()}-Data for:\t ${ticker}`;
     },
     dbUpdate: {
         success: "SUCCESS! Dataset updated for:",
         error: {
             else: "ERROR! No data found in db for:",
             badResponse: function (length, ticker) {
-                return `XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-        \tBAD RESPONSE!! Data for [${ticker}] not updated in DB! Trying again in ${length / 1000} seconds...\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n`;
+                return `XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        BAD RESPONSE!! Data for *** ${ticker} *** not updated in DB! Trying again in ${length / 1000} seconds...\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n`;
             },
         },
     },
@@ -22,6 +22,12 @@ const logMessages = {
     },
     dbRequest: {
         catchError: "Error while fetching, updating and saving the requested data!",
+    },
+    requestLimit: {
+        limitReached: function (dailyLimit, dataProvider, dataFunction) {
+            return `\nDaily limit of ${dailyLimit} possible requests per day at ${dataProvider} [${dataFunction.toLocaleUpperCase()}] reached.`;
+        },
+        stopScript: `Stopping script...\n`,
     },
 };
 export default logMessages;
