@@ -1,0 +1,97 @@
+type NumberOrNull = number | null;
+
+type MongooseConnectionOptions = ConnectOptions & {
+  useNewUrlParser: boolean;
+  useUnifiedTopology: boolean;
+};
+
+type ApiResponse = {
+  Address: string;
+  AnalystTargetPrice: string;
+  AssetType: string;
+  Beta: string;
+  BookValue: string;
+  CIK: string;
+  Currency: string;
+  Country: string;
+  Description: string;
+  DilutedEPSTTM: string;
+  DividendDate: string;
+  DividendPerShare: string;
+  DividendYield: string;
+  EBITDA: string;
+  EPS: string;
+  EVToEBITDA: string;
+  EVToRevenue: string;
+  Exchange: string;
+  ExDividendDate: string;
+  FiscalYearEnd: string;
+  ForwardPE: string;
+  GrossProfitTTM: string;
+  Industry: string;
+  LatestQuarter: string;
+  MarketCapitalization: string;
+  Name: string;
+  OperatingMarginTTM: string;
+  PEGRatio: string;
+  PERatio: string;
+  PriceToBookRatio: string;
+  PriceToSalesRatioTTM: string;
+  ProfitMargin: string;
+  QuarterlyEarningsGrowthYOY: string;
+  QuarterlyRevenueGrowthYOY: string;
+  ReturnOnAssetsTTM: string;
+  ReturnOnEquityTTM: string;
+  RevenuePerShareTTM: string;
+  RevenueTTM: string;
+  Sector: string;
+  SharesOutstanding: string;
+  TrailingPE: string;
+  //
+  Note?: string; // AlphaVantage error message if request is bad
+};
+
+type ProcessedApiResponse = {
+  address: string;
+  analystTargetPrice: NumberOrNull;
+  assetType: string;
+  beta: NumberOrNull;
+  bookValue: NumberOrNull;
+  cik: string;
+  currency: string;
+  country: string;
+  description: string;
+  dilutedEPSTTM: NumberOrNull;
+  dividendDate: string;
+  dividendPerShare: NumberOrNull;
+  dividendYield: NumberOrNull;
+  ebitda: NumberOrNull;
+  eps: NumberOrNull;
+  eps15x: NumberOrNull;
+  evToEBITDA: NumberOrNull;
+  evToRevenue: NumberOrNull;
+  exchange: string;
+  exDividendDate: string;
+  fiscalYearEnd: string;
+  forwardPE: NumberOrNull;
+  grossProfitTTM: NumberOrNull;
+  industry: string;
+  latestQuarter: string;
+  marketCapitalization: NumberOrNull;
+  name: string;
+  operatingMarginTTM: NumberOrNull;
+  pegRatio: NumberOrNull;
+  peRatio: NumberOrNull;
+  priceToBookRatio: NumberOrNull;
+  priceToSalesRatioTTM: NumberOrNull;
+  profitMargin: NumberOrNull;
+  quarterlyEarningsGrowthYOY: NumberOrNull;
+  quarterlyRevenueGrowthYOY: NumberOrNull;
+  returnOnAssetsTTM: NumberOrNull;
+  returnOnEquityTTM: NumberOrNull;
+  revenuePerShareTTM: NumberOrNull;
+  revenueTTM: NumberOrNull;
+  sector: string;
+  sharesOutstanding: NumberOrNull;
+  trailingPE: NumberOrNull;
+};
