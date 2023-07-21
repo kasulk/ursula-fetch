@@ -12,8 +12,8 @@ const logMessages = {
         error: {
             else: "ERROR! No data found in db for:",
             badResponse: function (length, ticker) {
-                return `XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-        BAD RESPONSE!! Data for *** ${ticker} *** not updated in DB! Trying again in ${length / 1000} seconds...\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n`;
+                return `XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        BAD RESPONSE!! Data for *** ${ticker} *** not updated in DB! Trying again in ${length / 1000} seconds...\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n`;
             },
         },
     },
@@ -25,7 +25,7 @@ const logMessages = {
     },
     requestLimit: {
         limitReached: function (dailyLimit, dataProvider, dataFunction) {
-            return `\nDaily limit of ${dailyLimit} possible requests per day for ${dataFunction.toLocaleUpperCase()} at ${dataProvider} reached.`;
+            return `\nDaily limit of ${dailyLimit} possible requests per day at ${dataProvider} [${dataFunction.toLocaleUpperCase()}] reached.`;
         },
         stopScript: `Stopping script...\n`,
     },

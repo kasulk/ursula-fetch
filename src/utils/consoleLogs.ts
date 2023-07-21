@@ -16,10 +16,10 @@ const logMessages = {
     error: {
       else: "ERROR! No data found in db for:",
       badResponse: function (length: number, ticker: string): string {
-        return `XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+        return `XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
         BAD RESPONSE!! Data for *** ${ticker} *** not updated in DB! Trying again in ${
           length / 1000
-        } seconds...\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n`;
+        } seconds...\nXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n`;
       },
     },
   },
@@ -35,7 +35,7 @@ const logMessages = {
       dataProvider: string,
       dataFunction: string
     ) {
-      return `\nDaily limit of ${dailyLimit} possible requests per day for ${dataFunction.toLocaleUpperCase()} at ${dataProvider} reached.`;
+      return `\nDaily limit of ${dailyLimit} possible requests per day at ${dataProvider} [${dataFunction.toLocaleUpperCase()}] reached.`;
     },
     stopScript: `Stopping script...\n`,
   },

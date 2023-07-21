@@ -10,7 +10,9 @@ const dataProvider = "AlphaVantage";
 const dataFunction = "OVERVIEW";
 const API_KEY = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY}&function=${dataFunction}&symbol=`;
-const fetchInterval = 3 * 1000; // 13 seconds; ~5 per minute
+const fetchInterval = 13 * 1000; // 13 seconds; ~5 per minute
+let requestCount = 0;
+const dailyRequestLimit = 100;
 
 if (!MONGODB_URI) {
   throw new Error("MONGODB_URI environment variable not found.");
@@ -46,6 +48,7 @@ async function requestAndSaveToDatabase() {
       );
       const response = await fetch(singleApiLink);
       const data = (await response.json()) as ApiResponseOverview;
+      requestCount++;
 
       // Format data
       const processedData = processApiResponseOverview(data);
@@ -89,6 +92,18 @@ function startRequestInterval() {
 
   // Start request interval every x seconds
   setInterval(() => {
+    // stop script, if daily limit is reached
+    if (requestCount === dailyRequestLimit) {
+      console.log(
+        logMessages.requestLimit.limitReached(
+          dailyRequestLimit,
+          dataProvider,
+          dataFunction
+        )
+      );
+      console.log(logMessages.requestLimit.stopScript);
+      process.exit(0); // successful exit with exit-code 0
+    }
     requestAndSaveToDatabase();
   }, fetchInterval);
 }
