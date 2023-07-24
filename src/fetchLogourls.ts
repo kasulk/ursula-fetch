@@ -1,7 +1,7 @@
 import "dotenv/config";
 import fetch from "node-fetch";
 import mongoose from "mongoose";
-import { processApiResponseQuotes } from "./utils/dataHelpers.js";
+import { processApiResponseLogourls } from "./utils/dataHelpers.js";
 import Logourl from "./db/models/Logourl.js";
 import logMessages from "./utils/consoleLogs.js";
 
@@ -54,7 +54,7 @@ async function requestAndSaveToDatabase() {
       const processedData = processApiResponseLogourls(data);
 
       // If data is bad show error, and don't save to db
-      if (!processedData.name) {
+      if (!processedData.logoURL) {
         console.log(
           logMessages.dbUpdate.error.badResponse(
             fetchInterval,

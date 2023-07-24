@@ -95,3 +95,15 @@ export function processApiResponseQuotes(
     },
   };
 }
+
+export function processApiResponseLogourls(
+  data: ApiResponseLogourls
+): ProcessedApiResponseLogourls {
+  return {
+    // meta: {
+    //   symbol: data.meta.symbol,
+    // },
+    // name: data.name,
+    logoURL: data.url,
+  };
+}
