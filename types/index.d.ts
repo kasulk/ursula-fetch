@@ -163,11 +163,9 @@ type ApiResponseLogourls = {
 };
 
 type ProcessedApiResponseLogourls = {
+  // process meta to check whether is response is good or bad
   meta: {
     symbol: string; // e.g. "PETS",
   };
-  // symbol: "PETS",
-  // ticker: string;
-  // name: string; // e.g. "PetMed Express Inc",
   logoURL: string; // e.g. "https://api.twelvedata.com/logo/apple.com"
 };

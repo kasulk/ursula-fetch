@@ -54,7 +54,6 @@ async function requestAndSaveToDatabase() {
       const processedData = processApiResponseLogourls(data);
 
       // If data is bad show error, and don't save to db
-      // if (!processedData.logoURL) {
       if (!processedData.meta.symbol) {
         console.log(
           logMessages.dbUpdate.error.badResponse(
