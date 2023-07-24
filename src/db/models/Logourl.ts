@@ -7,7 +7,7 @@ const logourlSchema = new Schema(
     // ticker: { type: mongoose.Schema.Types.ObjectId, ref: "Daten", required: true },
     ticker: { type: String, required: true },
     name: String,
-    url: {
+    logoURL: {
       type: String,
       required: true,
       default:
