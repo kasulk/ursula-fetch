@@ -48,6 +48,7 @@ function requestAndSaveToDatabase() {
             if (oldestDataset) {
                 // Conduct API request (with node-fetc)
                 console.log(logMessages.fetching(dataProvider, dataFunction, oldestDataset.ticker));
+                console.log(`Requested fetches: ${requestCount}/${dailyRequestLimit}`);
                 const response = yield fetch(singleApiLink);
                 const data = (yield response.json());
                 requestCount++;
