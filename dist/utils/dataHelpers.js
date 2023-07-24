@@ -82,10 +82,10 @@ export function processApiResponseQuotes(data) {
 }
 export function processApiResponseLogourls(data) {
     return {
-        // meta: {
-        //   symbol: data.meta.symbol,
-        // },
-        // name: data.name,
-        logoURL: data.url,
+        meta: {
+            symbol: data.meta.symbol,
+        },
+        logoURL: data.url ||
+            "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     };
 }

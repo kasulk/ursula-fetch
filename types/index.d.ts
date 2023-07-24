@@ -163,6 +163,9 @@ type ApiResponseLogourls = {
 };
 
 type ProcessedApiResponseLogourls = {
+  meta: {
+    symbol: string; // e.g. "PETS",
+  };
   // symbol: "PETS",
   // ticker: string;
   // name: string; // e.g. "PetMed Express Inc",
