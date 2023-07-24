@@ -153,3 +153,18 @@ type ProcessedApiResponseQuotes = {
     range: String; // e.g. "12.920000 - 24.010000",
   };
 };
+
+type ApiResponseLogourls = {
+  meta: {
+    symbol: string; // e.g. "PETS",
+    name: string; // e.g. "PetMed Express Inc",
+  };
+  url: string; // e.g. "https://api.twelvedata.com/logo/apple.com"
+};
+
+type ProcessedApiResponseLogourls = {
+  // symbol: "PETS",
+  // ticker: string;
+  // name: string; // e.g. "PetMed Express Inc",
+  logoURL: string; // e.g. "https://api.twelvedata.com/logo/apple.com"
+};
