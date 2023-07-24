@@ -10,17 +10,17 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import "dotenv/config";
 import fetch from "node-fetch";
 import mongoose from "mongoose";
-import { processApiResponseQuote } from "./utils/dataHelpers.js";
-import logMessages from "./utils/consoleLogs.js";
+import { processApiResponseQuotes } from "./utils/dataHelpers.js";
 import Quote from "./db/models/Quote.js";
+import logMessages from "./utils/consoleLogs.js";
 const MONGODB_URI = process.env.MONGODB_URI; // || ''
-const dataProvider = "AlphaVantage";
-const dataFunction = "GLOBAL_QUOTE";
-const API_KEY = process.env.API_KEY_AV;
-const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY}&function=${dataFunction}&symbol=`;
-const fetchInterval = 13 * 1000; // 13 seconds; ~5 per minute
+const dataProvider = "TwelveData";
+const dataFunction = "quote"; // must be lowercase
+const API_KEY = process.env.API_KEY_TD;
+const apiLink = `https://api.twelvedata.com/${dataFunction}?apikey=${API_KEY}&symbol=`;
+const fetchInterval = 8 * 1000; // 8 seconds; ~8 per minute
 let requestCount = 0;
-const dailyRequestLimit = 100;
+const dailyRequestLimit = 800; // 1 quote request = 1 credit
 if (!MONGODB_URI) {
     throw new Error("MONGODB_URI environment variable not found.");
 }
@@ -46,13 +46,13 @@ function requestAndSaveToDatabase() {
             const oldestDataset = yield Quote.findOne().sort("updatedAt");
             const singleApiLink = apiLink + oldestDataset.ticker;
             if (oldestDataset) {
-                // Conduct API request (with node-fetc)
+                // Conduct API request (with node-fetch)
                 console.log(logMessages.fetching(dataProvider, dataFunction, oldestDataset.ticker));
                 const response = yield fetch(singleApiLink);
                 const data = (yield response.json());
                 requestCount++;
                 // Format data
-                const processedData = processApiResponseQuote(data);
+                const processedData = processApiResponseQuotes(data);
                 // If data is bad show error, and don't save to db
                 if (!processedData.name) {
                     console.log(logMessages.dbUpdate.error.badResponse(fetchInterval, oldestDataset.ticker));

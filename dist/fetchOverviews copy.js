@@ -10,12 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import "dotenv/config";
 import fetch from "node-fetch";
 import mongoose from "mongoose";
-import { processApiResponseQuote } from "./utils/dataHelpers.js";
+import { processApiResponseOverview } from "./utils/dataHelpers.js";
+import Overview from "./db/models/Overview.js";
 import logMessages from "./utils/consoleLogs.js";
-import Quote from "./db/models/Quote.js";
 const MONGODB_URI = process.env.MONGODB_URI; // || ''
 const dataProvider = "AlphaVantage";
-const dataFunction = "GLOBAL_QUOTE";
+const dataFunction = "OVERVIEW";
 const API_KEY = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY}&function=${dataFunction}&symbol=`;
 const fetchInterval = 13 * 1000; // 13 seconds; ~5 per minute
@@ -43,7 +43,7 @@ function requestAndSaveToDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // Find oldest dataset in the db
-            const oldestDataset = yield Quote.findOne().sort("updatedAt");
+            const oldestDataset = yield Overview.findOne().sort("updatedAt");
             const singleApiLink = apiLink + oldestDataset.ticker;
             if (oldestDataset) {
                 // Conduct API request (with node-fetc)
@@ -52,7 +52,7 @@ function requestAndSaveToDatabase() {
                 const data = (yield response.json());
                 requestCount++;
                 // Format data
-                const processedData = processApiResponseQuote(data);
+                const processedData = processApiResponseOverview(data);
                 // If data is bad show error, and don't save to db
                 if (!processedData.name) {
                     console.log(logMessages.dbUpdate.error.badResponse(fetchInterval, oldestDataset.ticker));
