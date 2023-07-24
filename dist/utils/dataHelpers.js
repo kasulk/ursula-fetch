@@ -48,38 +48,62 @@ export function processApiResponseOverview(data) {
         trailingPE: toNumberOrDashToNull(data.TrailingPE), // e.g. "1372"
     };
 }
-export function processApiResponseQuotes(data) {
+// alphaVantage
+export function processApiResponseQuote(data) {
     return {
-        // address: data.Address,
-        // analystTargetPrice: toNumberOrDashToNull(data.AnalystTargetPrice),
-        // symbol: "PETS",
-        name: data.name,
-        exchange: data.exchange,
-        mic_code: data.mic_code,
-        currency: data.currency,
-        datetime: data.datetime,
-        timestamp: data.timestamp,
-        open: toNumberOrDashToNull(data.open),
-        high: toNumberOrDashToNull(data.high),
-        low: toNumberOrDashToNull(data.low),
-        close: toNumberOrDashToNull(data.close),
-        volume: toNumberOrDashToNull(data.volume),
-        previous_close: toNumberOrDashToNull(data.previous_close),
-        change: toNumberOrDashToNull(data.change),
-        percent_change: toNumberOrDashToNull(data.percent_change),
-        average_volume: toNumberOrDashToNull(data.average_volume),
-        is_market_open: data.is_market_open,
-        fifty_two_week: {
-            low: toNumberOrDashToNull(data.fifty_two_week.low),
-            high: toNumberOrDashToNull(data.fifty_two_week.high),
-            low_change: toNumberOrDashToNull(data.fifty_two_week.low_change),
-            high_change: toNumberOrDashToNull(data.fifty_two_week.high_change),
-            low_change_percent: toNumberOrDashToNull(data.fifty_two_week.low_change_percent),
-            high_change_percent: toNumberOrDashToNull(data.fifty_two_week.high_change_percent),
-            range: data.fifty_two_week.range, // "12.920000 - 24.010000",
+        // symbol: data["Global Quote"]["01. symbol"]; // e.g. "PETS"
+        ohlc: {
+            open: toNumberOrDashToNull(data["Global Quote"]["02. open"]),
+            high: toNumberOrDashToNull(data["Global Quote"]["03. high"]),
+            low: toNumberOrDashToNull(data["Global Quote"]["04. low"]),
+            close: toNumberOrDashToNull(data["Global Quote"]["05. price"]),
         },
+        volume: toNumberOrDashToNull(data["Global Quote"]["06. volume"]),
+        latestTradingDay: data["Global Quote"]["07. latest trading day"],
+        previousClose: toNumberOrDashToNull(data["Global Quote"]["08. previous close"]),
+        change: data["Global Quote"]["09. change"],
+        changePercent: data["Global Quote"]["10. change percent"],
     };
 }
+// twelveData
+// export function processApiResponseQuotes(
+//   data: ApiResponseQuotes
+// ): ProcessedApiResponseQuotes {
+//   return {
+//     // address: data.Address,
+//     // analystTargetPrice: toNumberOrDashToNull(data.AnalystTargetPrice),
+//     // symbol: "PETS",
+//     name: data.name, // "PetMed Express Inc",
+//     exchange: data.exchange, // "NASDAQ",
+//     mic_code: data.mic_code, // "XNGS",
+//     currency: data.currency, // "USD",
+//     datetime: data.datetime, // "2023-07-20",
+//     timestamp: data.timestamp, // 1689883199,
+//     open: toNumberOrDashToNull(data.open), // "14.10000",
+//     high: toNumberOrDashToNull(data.high), // "14.11000",
+//     low: toNumberOrDashToNull(data.low), // "13.71000",
+//     close: toNumberOrDashToNull(data.close), // "13.80000",
+//     volume: toNumberOrDashToNull(data.volume), // "231200",
+//     previous_close: toNumberOrDashToNull(data.previous_close), // "14.08000",
+//     change: toNumberOrDashToNull(data.change), // "-0.28000",
+//     percent_change: toNumberOrDashToNull(data.percent_change), // "-1.98863",
+//     average_volume: toNumberOrDashToNull(data.average_volume), // "388850",
+//     is_market_open: data.is_market_open, // false,
+//     fifty_two_week: {
+//       low: toNumberOrDashToNull(data.fifty_two_week.low), // "12.92000",
+//       high: toNumberOrDashToNull(data.fifty_two_week.high), // "24.01000",
+//       low_change: toNumberOrDashToNull(data.fifty_two_week.low_change), // "0.88000",
+//       high_change: toNumberOrDashToNull(data.fifty_two_week.high_change), //"-10.21000",
+//       low_change_percent: toNumberOrDashToNull(
+//         data.fifty_two_week.low_change_percent
+//       ), // "6.81115",
+//       high_change_percent: toNumberOrDashToNull(
+//         data.fifty_two_week.high_change_percent
+//       ), // "-42.52395",
+//       range: data.fifty_two_week.range, // "12.920000 - 24.010000",
+//     },
+//   };
+// }
 export function processApiResponseLogourls(data) {
     return {
         meta: {
