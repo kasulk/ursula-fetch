@@ -85,7 +85,9 @@ export function processApiResponseLogourls(data) {
         meta: {
             symbol: data.meta.symbol,
         },
-        logoURL: data.url ||
+        logoURL: 
+        // if no logourl is provided by api, insert default logourl
+        data.url ||
             "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
     };
 }

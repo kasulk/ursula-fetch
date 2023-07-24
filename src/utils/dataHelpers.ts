@@ -104,6 +104,7 @@ export function processApiResponseLogourls(
       symbol: data.meta.symbol,
     },
     logoURL:
+      // if no logourl is provided by api, insert default logourl
       data.url ||
       "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
   };
