@@ -1,18 +1,18 @@
 import "dotenv/config";
 import fetch from "node-fetch";
 import mongoose from "mongoose";
-import { processApiResponseQuotes } from "./utils/dataHelpers.js";
-import Quote from "./db/models/Quote.js";
+import { processApiResponseQuote } from "./utils/dataHelpers.js";
 import logMessages from "./utils/consoleLogs.js";
+import Quote from "./db/models/Quote.js";
 
 const MONGODB_URI = process.env.MONGODB_URI; // || ''
-const dataProvider = "TwelveData";
-const dataFunction = "quote"; // must be lowercase
-const API_KEY = process.env.API_KEY_TD;
-const apiLink = `https://api.twelvedata.com/${dataFunction}?apikey=${API_KEY}&symbol=`;
-const fetchInterval = 8 * 1000; // 8 seconds; ~8 per minute
+const dataProvider = "AlphaVantage";
+const dataFunction = "GLOBAL_QUOTE";
+const API_KEY = process.env.API_KEY_AV;
+const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY}&function=${dataFunction}&symbol=`;
+const fetchInterval = 13 * 1000; // 13 seconds; ~5 per minute
 let requestCount = 0;
-const dailyRequestLimit = 800; // 1 quote request = 1 credit
+const dailyRequestLimit = 100;
 
 if (!MONGODB_URI) {
   throw new Error("MONGODB_URI environment variable not found.");
@@ -42,19 +42,23 @@ async function requestAndSaveToDatabase() {
     const singleApiLink = apiLink + oldestDataset.ticker;
 
     if (oldestDataset) {
-      // Conduct API request (with node-fetch)
+      // Conduct API request (with node-fetc)
       console.log(
         logMessages.fetching(dataProvider, dataFunction, oldestDataset.ticker)
       );
+
       const response = await fetch(singleApiLink);
-      const data = (await response.json()) as ApiResponseQuotes;
+      const data = (await response.json()) as ApiResponseQuote;
       requestCount++;
 
       // Format data
-      const processedData = processApiResponseQuotes(data);
+      const processedData = processApiResponseQuote(data);
+
+      // Show counter
+      console.log(`Requested fetches: ${requestCount}/${dailyRequestLimit}`);
 
       // If data is bad show error, and don't save to db
-      if (!processedData.name) {
+      if (!processedData.price) {
         console.log(
           logMessages.dbUpdate.error.badResponse(
             fetchInterval,

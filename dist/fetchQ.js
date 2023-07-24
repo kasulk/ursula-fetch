@@ -53,8 +53,6 @@ function requestAndSaveToDatabase() {
                 requestCount++;
                 // Format data
                 const processedData = processApiResponseOverview(data);
-                // Show counter
-                console.log(`Requested fetches: ${requestCount}/${dailyRequestLimit}`);
                 // If data is bad show error, and don't save to db
                 if (!processedData.name) {
                     console.log(logMessages.dbUpdate.error.badResponse(fetchInterval, oldestDataset.ticker));
