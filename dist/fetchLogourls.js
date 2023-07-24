@@ -48,12 +48,13 @@ function requestAndSaveToDatabase() {
             if (oldestDataset) {
                 // Conduct API request (with node-fetch)
                 console.log(logMessages.fetching(dataProvider, dataFunction, oldestDataset.ticker));
-                console.log(`Requested fetches: ${requestCount}/${dailyRequestLimit}`);
                 const response = yield fetch(singleApiLink);
                 const data = (yield response.json());
                 requestCount++;
                 // Format data
                 const processedData = processApiResponseLogourls(data);
+                // Show counter
+                console.log(`Requested fetches: ${requestCount}/${dailyRequestLimit}`);
                 // If data is bad show error, and don't save to db
                 if (!processedData.meta.symbol) {
                     console.log(logMessages.dbUpdate.error.badResponse(fetchInterval, oldestDataset.ticker));

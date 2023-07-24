@@ -115,12 +115,12 @@ type ApiResponseQuote = {
 // alphaVantage
 type ProcessedApiResponseQuote = {
   // symbol: string; // e.g. "PETS"
-  ohlc: {
-    open: NumberOrNull;
-    high: NumberOrNull;
-    low: NumberOrNull;
-    close: NumberOrNull;
-  };
+  // ohlc: {
+  // open: NumberOrNull;
+  // high: NumberOrNull;
+  // low: NumberOrNull;
+  price: NumberOrNull; // =close
+  // };
   // price: NumberOrNull;
   volume: NumberOrNull;
   latestTradingDay: string; // e.g. 2023-07-23

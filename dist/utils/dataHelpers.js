@@ -52,12 +52,12 @@ export function processApiResponseOverview(data) {
 export function processApiResponseQuote(data) {
     return {
         // symbol: data["Global Quote"]["01. symbol"]; // e.g. "PETS"
-        ohlc: {
-            open: toNumberOrDashToNull(data["Global Quote"]["02. open"]),
-            high: toNumberOrDashToNull(data["Global Quote"]["03. high"]),
-            low: toNumberOrDashToNull(data["Global Quote"]["04. low"]),
-            close: toNumberOrDashToNull(data["Global Quote"]["05. price"]),
-        },
+        // ohlc: {
+        // open: toNumberOrDashToNull(data["Global Quote"]["02. open"]),
+        // high: toNumberOrDashToNull(data["Global Quote"]["03. high"]),
+        // low: toNumberOrDashToNull(data["Global Quote"]["04. low"]),
+        price: toNumberOrDashToNull(data["Global Quote"]["05. price"]),
+        // },
         volume: toNumberOrDashToNull(data["Global Quote"]["06. volume"]),
         latestTradingDay: data["Global Quote"]["07. latest trading day"],
         previousClose: toNumberOrDashToNull(data["Global Quote"]["08. previous close"]),

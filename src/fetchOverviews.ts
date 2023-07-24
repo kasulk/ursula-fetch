@@ -46,7 +46,6 @@ async function requestAndSaveToDatabase() {
       console.log(
         logMessages.fetching(dataProvider, dataFunction, oldestDataset.ticker)
       );
-      console.log(`Requested fetches: ${requestCount}/${dailyRequestLimit}`);
 
       const response = await fetch(singleApiLink);
       const data = (await response.json()) as ApiResponseOverview;
@@ -54,6 +53,9 @@ async function requestAndSaveToDatabase() {
 
       // Format data
       const processedData = processApiResponseOverview(data);
+
+      // Show counter
+      console.log(`Requested fetches: ${requestCount}/${dailyRequestLimit}`);
 
       // If data is bad show error, and don't save to db
       if (!processedData.name) {
