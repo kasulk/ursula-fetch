@@ -5,6 +5,7 @@ type MongooseConnectionOptions = ConnectOptions & {
   useUnifiedTopology: boolean;
 };
 
+// alphaVantage
 type ApiResponseOverview = {
   Address: string;
   AnalystTargetPrice: string;
@@ -51,6 +52,7 @@ type ApiResponseOverview = {
   Note?: string; // AlphaVantage error message if request is bad
 };
 
+// alphaVantage
 type ProcessedApiResponseOverview = {
   address: string;
   analystTargetPrice: NumberOrNull;
@@ -115,13 +117,10 @@ type ApiResponseQuote = {
 // alphaVantage
 type ProcessedApiResponseQuote = {
   // symbol: string; // e.g. "PETS"
-  // ohlc: {
   // open: NumberOrNull;
   // high: NumberOrNull;
   // low: NumberOrNull;
   price: NumberOrNull; // =close
-  // };
-  // price: NumberOrNull;
   volume: NumberOrNull;
   latestTradingDay: string; // e.g. 2023-07-23
   previousClose: NumberOrNull;
@@ -189,6 +188,7 @@ type ProcessedApiResponseQuote = {
 //   };
 // };
 
+// twelveData
 type ApiResponseLogourls = {
   meta: {
     symbol: string; // e.g. "PETS",
@@ -197,6 +197,7 @@ type ApiResponseLogourls = {
   url: string; // e.g. "https://api.twelvedata.com/logo/apple.com"
 };
 
+// twelveData
 type ProcessedApiResponseLogourls = {
   // process meta to check whether is response is good or bad
   meta: {
