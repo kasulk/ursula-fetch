@@ -2,9 +2,11 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const logoSchema = new Schema(
+const logourlSchema = new Schema(
   {
-    ticker: { type: mongoose.Schema.Types.ObjectId, ref: "Daten" },
+    // ticker: { type: mongoose.Schema.Types.ObjectId, ref: "Daten", required: true },
+    ticker: { type: String, required: true },
+    name: String,
     url: {
       type: String,
       required: true,
@@ -16,6 +18,7 @@ const logoSchema = new Schema(
 );
 
 // check whether the model with this name has already been compiled and if yes, take the already compiled model
-const Logo = mongoose.models.Logo || mongoose.model("Logo", logoSchema);
+const Logourl =
+  mongoose.models.Logourl || mongoose.model("Logourl", logourlSchema);
 
-export default Logo;
+export default Logourl;
