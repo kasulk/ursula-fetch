@@ -80,3 +80,12 @@ export function processApiResponseQuotes(data) {
         },
     };
 }
+export function processApiResponseLogourls(data) {
+    return {
+        // meta: {
+        //   symbol: data.meta.symbol,
+        // },
+        // name: data.name,
+        logoURL: data.url,
+    };
+}

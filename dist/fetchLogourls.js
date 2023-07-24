@@ -10,12 +10,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import "dotenv/config";
 import fetch from "node-fetch";
 import mongoose from "mongoose";
-import { processApiResponseQuotes } from "./utils/dataHelpers.js";
-import Quote from "./db/models/Quote.js";
+import { processApiResponseLogourls } from "./utils/dataHelpers.js";
+import Logourl from "./db/models/Logourl.js";
 import logMessages from "./utils/consoleLogs.js";
 const MONGODB_URI = process.env.MONGODB_URI; // || ''
 const dataProvider = "TwelveData";
-const dataFunction = "quote"; // must be lowercase
+const dataFunction = "logo"; // must be lowercase
 const API_KEY = process.env.API_KEY_TD;
 const apiLink = `https://api.twelvedata.com/${dataFunction}?apikey=${API_KEY}&symbol=`;
 const fetchInterval = 8 * 1000; // 8 seconds; ~8 per minute
@@ -43,7 +43,7 @@ function requestAndSaveToDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // Find oldest dataset in the db
-            const oldestDataset = yield Quote.findOne().sort("updatedAt");
+            const oldestDataset = yield Logourl.findOne().sort("updatedAt");
             const singleApiLink = apiLink + oldestDataset.ticker;
             if (oldestDataset) {
                 // Conduct API request (with node-fetch)
@@ -52,9 +52,9 @@ function requestAndSaveToDatabase() {
                 const data = (yield response.json());
                 requestCount++;
                 // Format data
-                const processedData = processApiResponseQuotes(data);
+                const processedData = processApiResponseLogourls(data);
                 // If data is bad show error, and don't save to db
-                if (!processedData.name) {
+                if (!processedData.logoURL) {
                     console.log(logMessages.dbUpdate.error.badResponse(fetchInterval, oldestDataset.ticker));
                     console.log(data, "\n");
                     return;

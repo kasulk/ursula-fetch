@@ -111,4 +111,5 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   }
   // "include": ["src"] // Only compile anything in the src folder, nothing else (e.g. in the root directory)
+  // "exclude": ["_muell"],
 }
