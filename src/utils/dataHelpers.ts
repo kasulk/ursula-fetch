@@ -58,6 +58,8 @@ export function processApiResponseOverview(
     // because of beginning numbers...
     fiftyTwoWeekHigh: toNumberOrDashToNull(data["52WeekHigh"]),
     fiftyTwoWeekLow: toNumberOrDashToNull(data["52WeekLow"]),
+    fiftyTwoWeekRange: `${data["52WeekHigh"]}-${data["52WeekLow"]}`,
+    // fiftyTwoWeekBruchwert: //! need current price...
     movingAverage50day: toNumberOrDashToNull(data["50DayMovingAverage"]),
     movingAverage200day: toNumberOrDashToNull(data["200DayMovingAverage"]),
   };
