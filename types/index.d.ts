@@ -74,7 +74,7 @@ type ProcessedApiResponseOverview = {
   dividendYield: NumberOrNull;
   ebitda: NumberOrNull;
   eps: NumberOrNull;
-  eps15x: NumberOrNull;
+  eps15x: NumberOrNull; // calculated
   evToEBITDA: NumberOrNull;
   evToRevenue: NumberOrNull;
   exchange: string;
@@ -104,6 +104,7 @@ type ProcessedApiResponseOverview = {
   // because of beginning numbers...
   fiftyTwoWeekHigh: NumberOrNull; // e.g. "12.92",
   fiftyTwoWeekLow: NumberOrNull; // e.g. "22.84",
+  // fiftyTwoWeekRange: string; // 'calculated'
   movingAverage50day: NumberOrNull; // e.g. "14.37",
   movingAverage200day: NumberOrNull; // e.g. "17.57",
 };
