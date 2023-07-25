@@ -10,9 +10,11 @@ const dataProvider = "AlphaVantage";
 const dataFunction = "GLOBAL_QUOTE";
 const API_KEY = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY}&function=${dataFunction}&symbol=`;
-const fetchInterval = 13 * 1000; // 13 seconds; ~5 per minute
+// const fetchInterval = 13 * 1000; // free: 13 seconds; ~5 per minute
+const fetchInterval = 2.1 * 1000; // premium: 2.1 seconds; ~30 per minute
 let requestCount = 0;
-const dailyRequestLimit = 100;
+// const dailyRequestLimit = 100; // free
+const dailyRequestLimit = 99999; // premium
 
 if (!MONGODB_URI) {
   throw new Error("MONGODB_URI environment variable not found.");
