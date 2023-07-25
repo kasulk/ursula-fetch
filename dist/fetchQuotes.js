@@ -48,7 +48,7 @@ function requestAndSaveToDatabase() {
             const oldestDataset = yield Quote.findOne().sort("updatedAt");
             const singleApiLink = apiLink + oldestDataset.ticker;
             if (oldestDataset) {
-                // Conduct API request (with node-fetc)
+                // Conduct API request (with node-fetch)
                 console.log(logMessages.fetching(dataProvider, dataFunction, oldestDataset.ticker));
                 const response = yield fetch(singleApiLink);
                 const data = (yield response.json());

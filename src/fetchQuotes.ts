@@ -44,7 +44,7 @@ async function requestAndSaveToDatabase() {
     const singleApiLink = apiLink + oldestDataset.ticker;
 
     if (oldestDataset) {
-      // Conduct API request (with node-fetc)
+      // Conduct API request (with node-fetch)
       console.log(
         logMessages.fetching(dataProvider, dataFunction, oldestDataset.ticker)
       );
