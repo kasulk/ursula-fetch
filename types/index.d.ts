@@ -101,6 +101,11 @@ type ProcessedApiResponseOverview = {
   sector: string;
   sharesOutstanding: NumberOrNull;
   trailingPE: NumberOrNull;
+  // because of beginning numbers...
+  fiftyTwoWeekHigh: NumberOrNull; // e.g. "12.92",
+  fiftyTwoWeekLow: NumberOrNull; // e.g. "22.84",
+  movingAverage50day: NumberOrNull; // e.g. "14.37",
+  movingAverage200day: NumberOrNull; // e.g. "17.57",
 };
 
 // alphaVantage
