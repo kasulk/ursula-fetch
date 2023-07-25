@@ -48,6 +48,11 @@ type ApiResponseOverview = {
   Sector: string;
   SharesOutstanding: string;
   TrailingPE: string;
+  // because of beginning numbers...
+  "52WeekHigh": string; // e.g. "22.84",
+  "52WeekLow": string; // e.g. "12.92",
+  "50DayMovingAverage": string; // e.g. "14.37",
+  "200DayMovingAverage": string; // e.g. "17.57",
   //
   Note?: string; // AlphaVantage error message if request is bad
 };
