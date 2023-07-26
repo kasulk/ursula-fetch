@@ -13,7 +13,6 @@ import { processApiResponseOverview } from "./utils/dataHelpers.js";
 import Overview from "./db/models/Overview.js";
 import logMessages from "./utils/consoleLogs.js";
 import { db } from "./db/connect.js";
-// const MONGODB_URI = process.env.MONGODB_URI; // || ''
 const API_KEY = process.env.API_KEY_AV;
 const dataProvider = "AlphaVantage";
 const dataFunction = "OVERVIEW";
@@ -21,23 +20,6 @@ const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY}&function=${
 const fetchInterval = 13 * 1000;
 let requestCount = 0;
 const dailyRequestLimit = 1;
-// if (!MONGODB_URI) {
-//   throw new Error("MONGODB_URI environment variable not found.");
-// }
-// const mongooseConnectionOptions: MongooseConnectionOptions = {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// };
-// // Connect to MongoDB
-// mongoose
-//   .connect(MONGODB_URI, mongooseConnectionOptions)
-//   .then(() => {
-//     console.log(logMessages.dbConnect.success);
-//   })
-//   .catch((error) => {
-//     console.error(logMessages.dbConnect.catchError, error);
-//   });
-// const db = mongoose.connection;
 // Conduct API request and save data in db
 function requestAndSaveToDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
