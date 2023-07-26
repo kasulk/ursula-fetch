@@ -12,7 +12,7 @@ const dataFunction = "OVERVIEW";
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY}&function=${dataFunction}&symbol=`;
 const fetchInterval = 13 * 1000;
 let requestCount = 0;
-const dailyRequestLimit = 1;
+const dailyRequestLimit = 100;
 
 // Conduct API request and save data in db
 async function requestAndSaveToDatabase() {
@@ -22,7 +22,7 @@ async function requestAndSaveToDatabase() {
     const singleApiLink = apiLink + oldestDataset.ticker;
 
     if (oldestDataset) {
-      // Conduct API request (with node-fetc)
+      // Conduct API request (with node-fetch)
       console.log(
         logMessages.fetching(dataProvider, dataFunction, oldestDataset.ticker)
       );
