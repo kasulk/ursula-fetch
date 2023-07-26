@@ -4,37 +4,36 @@ import mongoose from "mongoose";
 import { processApiResponseOverview } from "./utils/dataHelpers.js";
 import Overview from "./db/models/Overview.js";
 import logMessages from "./utils/consoleLogs.js";
+import { db } from "./db/connect.js";
 
-const MONGODB_URI = process.env.MONGODB_URI; // || ''
+// const MONGODB_URI = process.env.MONGODB_URI; // || ''
+const API_KEY = process.env.API_KEY_AV;
 const dataProvider = "AlphaVantage";
 const dataFunction = "OVERVIEW";
-const API_KEY = process.env.API_KEY_AV;
 const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY}&function=${dataFunction}&symbol=`;
-// const fetchInterval = 13 * 1000; // 13 seconds; ~5 per minute
-const fetchInterval = 2.1 * 1000;
+const fetchInterval = 13 * 1000;
 let requestCount = 0;
-// const dailyRequestLimit = 100;
-const dailyRequestLimit = 99999;
+const dailyRequestLimit = 1;
 
-if (!MONGODB_URI) {
-  throw new Error("MONGODB_URI environment variable not found.");
-}
+// if (!MONGODB_URI) {
+//   throw new Error("MONGODB_URI environment variable not found.");
+// }
 
-const mongooseConnectionOptions: MongooseConnectionOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-};
+// const mongooseConnectionOptions: MongooseConnectionOptions = {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+// };
 
-// Connect to MongoDB
-mongoose
-  .connect(MONGODB_URI, mongooseConnectionOptions)
-  .then(() => {
-    console.log(logMessages.dbConnect.success);
-  })
-  .catch((error) => {
-    console.error(logMessages.dbConnect.catchError, error);
-  });
-const db = mongoose.connection;
+// // Connect to MongoDB
+// mongoose
+//   .connect(MONGODB_URI, mongooseConnectionOptions)
+//   .then(() => {
+//     console.log(logMessages.dbConnect.success);
+//   })
+//   .catch((error) => {
+//     console.error(logMessages.dbConnect.catchError, error);
+//   });
+// const db = mongoose.connection;
 
 // Conduct API request and save data in db
 async function requestAndSaveToDatabase() {
@@ -98,6 +97,7 @@ function startRequestInterval() {
 
   // Start request interval every x seconds
   setInterval(() => {
+    requestAndSaveToDatabase();
     // stop script, if daily limit is reached
     if (requestCount === dailyRequestLimit) {
       console.log(
@@ -110,7 +110,6 @@ function startRequestInterval() {
       console.log(logMessages.requestLimit.stopScript);
       process.exit(0); // successful exit with exit-code 0
     }
-    requestAndSaveToDatabase();
   }, fetchInterval);
 }
 
