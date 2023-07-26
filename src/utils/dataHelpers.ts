@@ -55,6 +55,13 @@ export function processApiResponseOverview(
     sector: data.Sector, // e.g. "TRADE & SERVICES"
     sharesOutstanding: toNumberOrDashToNull(data.SharesOutstanding), // e.g. "21173300"
     trailingPE: toNumberOrDashToNull(data.TrailingPE), // e.g. "1372"
+    // because of beginning numbers...
+    fiftyTwoWeekHigh: toNumberOrDashToNull(data["52WeekHigh"]),
+    fiftyTwoWeekLow: toNumberOrDashToNull(data["52WeekLow"]),
+    // fiftyTwoWeekRange: data["52WeekHigh"] + "-" + data["52WeekLow"], //! removed; better process during rendering in the frontend...
+    // fiftyTwoWeekBruchwert: //! need current price...
+    movingAverage50day: toNumberOrDashToNull(data["50DayMovingAverage"]),
+    movingAverage200day: toNumberOrDashToNull(data["200DayMovingAverage"]),
   };
 }
 

@@ -48,6 +48,11 @@ type ApiResponseOverview = {
   Sector: string;
   SharesOutstanding: string;
   TrailingPE: string;
+  // because of beginning numbers...
+  "52WeekHigh": string; // e.g. "22.84",
+  "52WeekLow": string; // e.g. "12.92",
+  "50DayMovingAverage": string; // e.g. "14.37",
+  "200DayMovingAverage": string; // e.g. "17.57",
   //
   Note?: string; // AlphaVantage error message if request is bad
 };
@@ -69,7 +74,7 @@ type ProcessedApiResponseOverview = {
   dividendYield: NumberOrNull;
   ebitda: NumberOrNull;
   eps: NumberOrNull;
-  eps15x: NumberOrNull;
+  eps15x: NumberOrNull; // calculated
   evToEBITDA: NumberOrNull;
   evToRevenue: NumberOrNull;
   exchange: string;
@@ -96,6 +101,12 @@ type ProcessedApiResponseOverview = {
   sector: string;
   sharesOutstanding: NumberOrNull;
   trailingPE: NumberOrNull;
+  // because of beginning numbers...
+  fiftyTwoWeekHigh: NumberOrNull; // e.g. "12.92",
+  fiftyTwoWeekLow: NumberOrNull; // e.g. "22.84",
+  // fiftyTwoWeekRange: string; // 'calculated'
+  movingAverage50day: NumberOrNull; // e.g. "14.37",
+  movingAverage200day: NumberOrNull; // e.g. "17.57",
 };
 
 // alphaVantage

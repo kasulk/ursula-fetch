@@ -34,9 +34,13 @@ const overviewSchema = new Schema(
     eps15x: NumberOrNull, // calulated
     evToEBITDA: NumberOrNull,
     evToRevenue: NumberOrNull,
+    fiftyTwoWeekHigh: NumberOrNull, // e.g. "12.92",
+    fiftyTwoWeekLow: NumberOrNull, // e.g. "22.84",
     forwardPE: NumberOrNull,
     grossProfitTTM: NumberOrNull,
     marketCapitalization: NumberOrNull,
+    movingAverage50day: NumberOrNull, // e.g. "14.37",
+    movingAverage200day: NumberOrNull, // e.g. "17.57",
     operatingMarginTTM: NumberOrNull,
     peRatio: NumberOrNull,
     pegRatio: NumberOrNull,
@@ -51,6 +55,7 @@ const overviewSchema = new Schema(
     revenueTTM: NumberOrNull,
     sharesOutstanding: NumberOrNull,
     trailingPE: NumberOrNull,
+    // fiftyTwoWeekRange: string; // 'calculated'
     // 52WeekHigh: NumberOrNull, //! twelve data
     // 52WeekLow: NumberOrNull,//! twelve data
     // 50DayMovingAverage: NumberOrNull, //!twelve data
