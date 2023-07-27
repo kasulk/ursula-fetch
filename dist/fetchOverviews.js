@@ -20,7 +20,6 @@ const apiLink = `https://www.alphavantage.co/query?apikey=${API_KEY}&function=${
 const fetchInterval = 13 * 1000;
 let requestCount = 0;
 const dailyRequestLimit = 100;
-
 // Conduct API request and save data in db
 function requestAndSaveToDatabase() {
     return __awaiter(this, void 0, void 0, function* () {

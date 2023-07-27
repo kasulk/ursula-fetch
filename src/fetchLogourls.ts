@@ -38,7 +38,8 @@ async function requestAndSaveToDatabase() {
       console.log(`Requested fetches: ${requestCount}/${dailyRequestLimit}`);
 
       // If data is bad show error, and don't save to db
-      if (!processedData.meta.symbol) {
+      // if (!processedData.meta.symbol) {
+      if (!processedData.logoURL) {
         console.log(
           logMessages.dbUpdate.error.badResponse(
             fetchInterval,

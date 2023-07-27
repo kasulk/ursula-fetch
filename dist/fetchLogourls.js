@@ -38,7 +38,8 @@ function requestAndSaveToDatabase() {
                 // Show counter
                 console.log(`Requested fetches: ${requestCount}/${dailyRequestLimit}`);
                 // If data is bad show error, and don't save to db
-                if (!processedData.meta.symbol) {
+                // if (!processedData.meta.symbol) {
+                if (!processedData.logoURL) {
                     console.log(logMessages.dbUpdate.error.badResponse(fetchInterval, oldestDataset.ticker));
                     console.log(data, "\n");
                     // return;  //note: save all for initial fetch
