@@ -113,9 +113,9 @@ export function processApiResponseQuote(data) {
 // twelveData
 export function processApiResponseLogourls(data) {
     return {
-        meta: {
-            symbol: data.meta.symbol,
-        },
+        // meta: {
+        //   symbol: data.meta.symbol,
+        // },
         logoURL: 
         // if no logourl is provided by api, insert default logourl
         data.url ||

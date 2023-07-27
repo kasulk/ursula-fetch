@@ -130,9 +130,9 @@ export function processApiResponseLogourls(
   data: ApiResponseLogourls
 ): ProcessedApiResponseLogourls {
   return {
-    meta: {
-      symbol: data.meta.symbol,
-    },
+    // meta: {
+    //   symbol: data.meta.symbol,
+    // },
     logoURL:
       // if no logourl is provided by api, insert default logourl
       data.url ||

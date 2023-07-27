@@ -211,7 +211,7 @@ type ApiResponseLogourls = {
 // twelveData
 type ProcessedApiResponseLogourls = {
   // process meta to check whether is response is good or bad
-  meta: {
+  meta?: {
     symbol: string; // e.g. "PETS",
   };
   logoURL: string; // e.g. "https://api.twelvedata.com/logo/apple.com"
